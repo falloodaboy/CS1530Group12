@@ -27,6 +27,7 @@ public class TerraRogue extends ApplicationAdapter {
 		cam.update();
 		
 		gamemap = new CustomGameMap();
+		System.out.println(gamemap.getLayers());
 	}
 
 	@Override
@@ -35,7 +36,7 @@ public class TerraRogue extends ApplicationAdapter {
 		
 		
 		if(Gdx.input.isTouched()) {
-			cam.translate(-Gdx.input.getDeltaX(), -Gdx.input.getDeltaY());
+			cam.translate(-Gdx.input.getDeltaX(), Gdx.input.getDeltaY());
 			cam.update();
 		}
 		

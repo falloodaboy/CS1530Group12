@@ -66,6 +66,9 @@ public class CustomGameMapLoader {
 					if(random.nextInt(50) == 0) {
 						data.map[1][row][col] = TileType.CLOUD.getId();
 					}
+					else {
+						data.map[1][row][col] = TileType.SKY.getId();
+					}
 				}
 			}
 		}
