@@ -10,11 +10,13 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.group12.terrarogue.world.CustomGameMap;
 import com.group12.terrarogue.world.GameMap;
 import com.group12.terrarogue.world.TileType;
+import com.group12.terrarogue.world.TiledGameMap;
 
 public class TerraRogue extends ApplicationAdapter {
 	SpriteBatch batch;
 	Texture img;
 	GameMap gamemap;
+	GameMap tilegamemap;
 	OrthographicCamera cam;
 	
 	
@@ -26,8 +28,8 @@ public class TerraRogue extends ApplicationAdapter {
 		cam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		cam.update();
 		
+		tilegamemap = new TiledGameMap();
 		gamemap = new CustomGameMap();
-		System.out.println(gamemap.getLayers());
 	}
 
 	@Override
@@ -45,12 +47,15 @@ public class TerraRogue extends ApplicationAdapter {
 			TileType type = gamemap.getTileTypeByLocation(1, pos.x, pos.y);
 		}
 		
-		gamemap.render(cam);
+		//gamemap.render(cam);
+		tilegamemap.render(cam);
 	}
 	
 	@Override
 	public void dispose () {
 		batch.dispose();
 		img.dispose();
+		tilegamemap.dispose();
+		gamemap.dispose();
 	}
 }

@@ -60,7 +60,6 @@ public class CustomGameMap extends GameMap {
 
 	@Override
 	public TileType getTileTypeByLocation(int layer, float x, float y) {
-		// TODO Auto-generated method stub
 		return getTileTypeByCoordinate(layer, (int) (x / TileType.TILE_SIZE), getHeight() - (int) (y / TileType.TILE_SIZE) - 1);
 	}
 	
