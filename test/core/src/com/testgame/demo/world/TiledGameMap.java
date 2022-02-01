@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.testgame.demo.entities.Entity;
+import com.testgame.demo.entities.Player;
 
 public class TiledGameMap extends GameMap {
 
@@ -23,24 +24,28 @@ public class TiledGameMap extends GameMap {
 	public TiledGameMap() {
 		tileMap = new TmxMapLoader().load("basemap.tmx");
 		maprenderer = new OrthogonalTiledMapRenderer(tileMap);
+		entities = new ArrayList<>();
+		
+		entities.add(new Player(320, 240, this));
 	}
 	
 	
 	@Override
 	public void render(OrthographicCamera camera, SpriteBatch batch) {
-		this.update(Gdx.graphics.getDeltaTime());
+		this.update(camera, Gdx.graphics.getDeltaTime());
 		maprenderer.setView(camera);
 		maprenderer.render();
-		
+		batch.begin();
 		for(Entity entry : entities) {
 			entry.render(camera, batch);
 		}
+		batch.end();
 	}
 
 	@Override
-	public void update(float deltaTime) {
+	public void update(OrthographicCamera camera, float deltaTime) {
 		for(Entity entry: entities) {
-			entry.update(deltaTime);
+			entry.update(camera, deltaTime);
 		}
 	}
 

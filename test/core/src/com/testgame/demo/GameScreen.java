@@ -44,19 +44,19 @@ public class GameScreen implements Screen {
 			cam.translate(-Gdx.input.getDeltaX(),  Gdx.input.getDeltaY());
 			cam.update();
 		}
-		
-		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			cam.translate(5, 0);
-		}
-		else if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
-			cam.translate(0, 5);
-		}
-		else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-			cam.translate(0, -5);
-		}
-		else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			cam.translate(-5, 0);
-		}
+//		
+//		if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+//			cam.translate(5, 0);
+//		}
+//		else if(Gdx.input.isKeyPressed(Input.Keys.UP)) {
+//			cam.translate(0, 5);
+//		}
+//		else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+//			cam.translate(0, -5);
+//		}
+//		else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+//			cam.translate(-5, 0);
+//		}
 		cam.update();
 		
 		this.gamemap.render(cam, this.game.batch);

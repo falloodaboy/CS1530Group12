@@ -12,7 +12,7 @@ public enum EntitiesType {
 	ENEMYA("EnemyA", 5, 5, 5),  //balanced enemy
 	ENEMYB("EnemyB", 9, 4, 3),  //strong enemy
 	ENEMYC("EnemyC", 2, 4, 10), //agile enemy
-	PLAYER("Player", 10, 10, 10);
+	PLAYER("Player", 10, 10, 1);
 	
 	
 	private String name;

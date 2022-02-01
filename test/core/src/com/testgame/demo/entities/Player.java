@@ -14,17 +14,17 @@ public class Player extends Entity {
 	
 	public Player(float x, float y, GameMap map) {
 		super(x, y, EntitiesType.PLAYER, map);
-		image = new Texture("");
+		image = new Texture("player.png");
 	}
 
 	@Override
 	public void render(OrthographicCamera cam, SpriteBatch batch) {
-		this.update(Gdx.graphics.getDeltaTime());
-		batch.begin();
-		batch.draw(image, this.getX(), this.getY(), image.getWidth(), image.getHeight());
-		batch.end();
-		cam.translate(this.getX(), this.getY());
-		cam.update();
+		//cam.position.set(getX() + image.getWidth()/2, getY() + image.getHeight() / 2, 0);
+		//batch.begin();
+		batch.draw(image, this.getX(), this.getY(), 32, 32);
+		//batch.end();
+		this.update(cam, Gdx.graphics.getDeltaTime());
+		
 	}
 
 	
@@ -35,21 +35,43 @@ public class Player extends Entity {
 	}
 
 	@Override
-	public void update(float deltaTime) {
+	public void update(OrthographicCamera cam, float deltaTime) {
+		//System.out.println(cam.position);
+		
 		if(Gdx.input.isKeyPressed(Keys.LEFT)) {
-			this.moveX(-EntitiesType.PLAYER.getSpeed() * deltaTime);
+			float xPrev = getX();
+			float yPrev = getY();
+			this.moveX(-EntitiesType.PLAYER.getSpeed());
+			//System.out.println("X: " + pos.x  + " Y: " + pos.y);
+			cam.translate((getX() - xPrev) - 3, (getY() - yPrev));
+
 		}
 		else if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
-			this.moveX(EntitiesType.PLAYER.getSpeed()* deltaTime);
+			float xPrev = getX();
+			float yPrev = getY();
+			this.moveX(EntitiesType.PLAYER.getSpeed());
+			//System.out.println("X: " + pos.x  + " Y: " + pos.y);
+			cam.translate((getX() - xPrev) + 3, (getY() - yPrev));
+			
 		}
 		else if(Gdx.input.isKeyPressed(Keys.UP)) {
-			this.moveY(EntitiesType.PLAYER.getSpeed()* deltaTime);
+			float xPrev = getX();
+			float yPrev = getY();
+			this.moveY(EntitiesType.PLAYER.getSpeed());
+			//System.out.println("X: " + pos.x  + " Y: " + pos.y);
+			cam.translate(getX() - xPrev, getY() - yPrev + 3);
+			
 		}
 		else if(Gdx.input.isKeyPressed(Keys.DOWN)) {
-			this.moveY(-EntitiesType.PLAYER.getSpeed()* deltaTime);
+			float xPrev = getX();
+			float yPrev = getY();
+			this.moveY(-EntitiesType.PLAYER.getSpeed());
+			//System.out.println("X: " + pos.x  + " Y: " + pos.y);
+			cam.translate(getX() - xPrev, getY() - yPrev - 3);
 		}
 		else {
-			throw new RuntimeException("Player.java: update: Wrong input detected");
+			//System.out.println("Player.java: update: Wrong input detected");
+			//throw new RuntimeException("Player.java: update: Wrong input detected");
 		}
 
 	}
