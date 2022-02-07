@@ -9,10 +9,10 @@ package com.testgame.demo.entities;
  */
 public enum EntitiesType {
 	
-	ENEMYA("EnemyA", 5, 5, 5),  //balanced enemy
-	ENEMYB("EnemyB", 9, 4, 3),  //strong enemy
-	ENEMYC("EnemyC", 2, 4, 10), //agile enemy
-	PLAYER("Player", 10, 10, 1);
+	ENEMYA("EnemyA", 5, 5, 2),  //balanced enemy
+	ENEMYB("EnemyB", 9, 4, 2),  //strong enemy
+	ENEMYC("EnemyC", 2, 4, 5), //agile enemy
+	PLAYER("Player", 10, 10, 3);
 	
 	
 	private String name;

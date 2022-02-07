@@ -36,6 +36,9 @@
 </data>
  </layer>
  <layer id="2" name="MidSpace" width="30" height="30">
+  <properties>
+   <property name="blocked" type="bool" value="false"/>
+  </properties>
   <data encoding="csv">
 5,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,6,7,
 14,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,37,0,0,0,0,0,16,

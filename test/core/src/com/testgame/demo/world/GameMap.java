@@ -3,6 +3,7 @@ package com.testgame.demo.world;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.testgame.demo.entities.Entity;
@@ -42,7 +43,7 @@ public abstract class GameMap {
 			for(int col = (int) x / TileType.TILE_SIZE; col  < Math.ceil(x + width) / TileType.TILE_SIZE; col++) {
 				for(int layer = 0; layer < getLayers(); layer++) {
 					TileType type = this.getTileTypeByCoordinate(layer, col, row);
-					
+				
 					
 					if(type != null && type.isCollidable()) {
 						answer = true;
@@ -52,5 +53,10 @@ public abstract class GameMap {
 		}
 		
 		return answer;
+	}
+	
+	
+	public static void setCameraBoundary(Camera camera, float startX, float startY, float width, float height) {
+		
 	}
 }
