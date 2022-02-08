@@ -8,8 +8,8 @@ import com.testgame.demo.TerraRogueDemo;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.width = 480;
-		config.height = 480;
+		config.width = 1080;
+		config.height = 1080;
 		new LwjglApplication(new TerraRogueDemo(), config);
 	}
 }

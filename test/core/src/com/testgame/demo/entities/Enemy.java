@@ -4,13 +4,14 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.testgame.demo.world.GameMap;
+import com.testgame.demo.world.TiledGameMap;
 
 public class Enemy extends Entity {
 
 	
 	Texture image;
 	
-	public Enemy(float x, float y, EntitiesType type, GameMap map, Texture image) {
+	public Enemy(float x, float y, EntitiesType type, TiledGameMap map, Texture image) {
 		super(x, y, type, map);
 	}
 

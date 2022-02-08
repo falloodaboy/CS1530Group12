@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.5" tiledversion="1.7.2" name="CityTileSet" tilewidth="64" tileheight="64" tilecount="82" columns="0">
+<tileset version="1.8" tiledversion="1.8.0" name="CityTileSet" tilewidth="64" tileheight="64" tilecount="82" columns="0">
  <grid orientation="orthogonal" width="1" height="1"/>
  <tile id="0">
   <properties>
@@ -81,7 +81,7 @@
  </tile>
  <tile id="13">
   <properties>
-   <property name="blocked" type="bool" value="false"/>
+   <property name="blocked" type="bool" value="true"/>
   </properties>
   <image width="32" height="32" source="1 Tiles/IndustrialTile_13.png"/>
  </tile>
@@ -93,7 +93,7 @@
  </tile>
  <tile id="15">
   <properties>
-   <property name="blocked" type="bool" value="false"/>
+   <property name="blocked" type="bool" value="true"/>
   </properties>
   <image width="32" height="32" source="1 Tiles/IndustrialTile_15.png"/>
  </tile>
@@ -387,7 +387,7 @@
  </tile>
  <tile id="64">
   <properties>
-   <property name="blocked" type="bool" value="false"/>
+   <property name="blocked" type="bool" value="true"/>
   </properties>
   <image width="32" height="32" source="1 Tiles/IndustrialTile_64.png"/>
  </tile>

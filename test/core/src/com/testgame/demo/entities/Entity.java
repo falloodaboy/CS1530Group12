@@ -5,16 +5,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.testgame.demo.world.GameMap;
 import com.testgame.demo.world.TileType;
+import com.testgame.demo.world.TiledGameMap;
 
 public abstract class Entity {
 
 	
 	protected Vector2 pos;
 	protected EntitiesType type;
-	protected GameMap map;
+	protected TiledGameMap map;
 	
 	
-	public Entity(float x, float y, EntitiesType type, GameMap map) {
+	public Entity(float x, float y, EntitiesType type, TiledGameMap map) {
 		this.pos = new Vector2(x, y);
 		this.type = type;
 		this.map = map;
@@ -40,11 +41,11 @@ public abstract class Entity {
 		pos.y = y;
 	}
 	
-	public GameMap getMap() {
+	public TiledGameMap getMap() {
 		return map;
 	}
 	
-	public void setMap(GameMap map) {
+	public void setMap(TiledGameMap map) {
 		this.map = map;
 	}
 	
@@ -61,7 +62,7 @@ public abstract class Entity {
 		//add new x position
 		float newX = pos.x + amount;
 //		pos.x = newX;
-		if(true) {
+		if(!map.isCollidingWithMap(newX, pos.y, 1)) {
 			pos.x = newX;
 		}
 		else {
@@ -75,7 +76,7 @@ public abstract class Entity {
 	public void moveY (float amount) {
 		float newY = pos.y + amount;
 //		pos.y = newY;
-		if(true) {
+		if(!map.isCollidingWithMap(pos.x, newY, 1)) {
 			pos.y = newY;
 		}
 		else {

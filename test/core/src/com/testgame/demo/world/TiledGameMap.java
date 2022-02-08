@@ -92,13 +92,33 @@ public class TiledGameMap extends GameMap {
 		return tileMap.getLayers().getCount();
 	}
 	
-	public boolean isCollidingWithMap(int row, int col, int layer) {
+	public boolean isCollidingWithMap(float x, float y, int layer) {
 		boolean answer = false;
 		
 		collisionLayer = (TiledMapTileLayer) tileMap.getLayers().get(layer);
-		Boolean alp = (Boolean) collisionLayer.getCell(row, col).getTile().getProperties().get("blocked");
+		int xval = ( ((int)x + Gdx.graphics.getWidth()/2) / Settings.TILE_SIZE);
+		int yval = ( ((int)y + Gdx.graphics.getHeight()/2) / Settings.TILE_SIZE);
 		
-		return alp.booleanValue();
+		if(collisionLayer.getCell(xval, yval) != null) {
+			//System.out.println("Cell available at: " + xval + " " + yval);
+			answer = true;
+		}
+		else if(collisionLayer.getCell(xval + 1, yval) != null) {
+			answer = true;
+		}
+		else if(collisionLayer.getCell(xval, yval + 1) != null) {
+			answer = true;
+		}
+		else if(collisionLayer.getCell(xval + 1, yval + 1) != null) {
+			answer = true;
+		}
+		else {
+			answer = false;
+		}
+		
+		//System.out.println(yval + " " + xval);
+		
+		return answer;
 	}
 
 }
