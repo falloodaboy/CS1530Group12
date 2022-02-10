@@ -58,31 +58,12 @@ public abstract class Entity {
 	}
 	
 	//Do collision detection for x-axis here
-	public void moveX (float amount) {
-		//add new x position
-		float newX = pos.x + amount;
-//		pos.x = newX;
-		if(!map.isCollidingWithMap(newX, pos.y, 1)) {
-			pos.x = newX;
-		}
-		else {
-			//System.out.println("Colliding with map objects");
-		}
-	}
+	public abstract void moveX (float amount, int direction);
 	
 	
 	
 	//Do collision detection for y-axis here
-	public void moveY (float amount) {
-		float newY = pos.y + amount;
-//		pos.y = newY;
-		if(!map.isCollidingWithMap(pos.x, newY, 1)) {
-			pos.y = newY;
-		}
-		else {
-			//System.out.println("Colliding with map objects");
-		}
-	}
+	public abstract void moveY (float amount, int direction);
 }
 
 //!map.isCollidingWithMap(pos.x, newY,TileType.TILE_SIZE, TileType.TILE_SIZE)

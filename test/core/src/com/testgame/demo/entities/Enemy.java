@@ -32,6 +32,18 @@ public class Enemy extends Entity {
 		
 	}
 
+	@Override
+	public void moveX(float amount, int direction) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void moveY(float amount, int direction) {
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 	

@@ -53,21 +53,45 @@ public class Player extends Entity {
 	public void update(OrthographicCamera cam, float deltaTime) {
 		
 		if(Gdx.input.isKeyPressed(Keys.LEFT)) {
-			this.moveX(-EntitiesType.PLAYER.getSpeed());
+			this.moveX(-EntitiesType.PLAYER.getSpeed(), 3);
 		}
 		else if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
-			this.moveX(EntitiesType.PLAYER.getSpeed());
+			this.moveX(EntitiesType.PLAYER.getSpeed(), 1);
 		}
 		else if(Gdx.input.isKeyPressed(Keys.UP)) {
-			this.moveY(EntitiesType.PLAYER.getSpeed());
+			this.moveY(EntitiesType.PLAYER.getSpeed(), 0);
 		}
 		else if(Gdx.input.isKeyPressed(Keys.DOWN)) {
-			this.moveY(-EntitiesType.PLAYER.getSpeed());
+			this.moveY(-EntitiesType.PLAYER.getSpeed(), 2);
 		}
 		else {
 			//reset the player anim to whichever direction is necessary
 			//System.out.println("Player.java: update: Wrong input detected");
 		}
+	}
+
+	@Override
+	public void moveY(float amount, int direction) {
+		float newY = pos.y + amount;
+		if(!map.isCollidingWithMap(pos.x, newY, 1, direction)) {
+			pos.y = newY;
+		}
+		else {
+			
+		}
+	}
+
+	@Override
+	public void moveX(float amount, int direction) {
+		float newX = pos.x + amount;
+		
+		if(!map.isCollidingWithMap(newX, pos.y, 1, direction)) {
+			pos.x = newX;
+		}
+		else {
+			//System.out.println("Colliding with map objects");
+		}
+		
 	}
 
 }

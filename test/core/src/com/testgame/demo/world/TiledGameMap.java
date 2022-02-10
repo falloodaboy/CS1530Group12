@@ -92,33 +92,87 @@ public class TiledGameMap extends GameMap {
 		return tileMap.getLayers().getCount();
 	}
 	
-	public boolean isCollidingWithMap(float x, float y, int layer) {
+	public boolean isCollidingWithMap(float x, float y, int layer, int direction) {
 		boolean answer = false;
 		
 		collisionLayer = (TiledMapTileLayer) tileMap.getLayers().get(layer);
 		int xval = ( ((int)x + Gdx.graphics.getWidth()/2) / Settings.TILE_SIZE);
 		int yval = ( ((int)y + Gdx.graphics.getHeight()/2) / Settings.TILE_SIZE);
+		int xup = ((int) x + Settings.PLAYER_WIDTH - 1 + Gdx.graphics.getWidth()/2) / Settings.TILE_SIZE;
+		int yup = ( ((int)y + Settings.PLAYER_HEIGHT - 1 + Gdx.graphics.getHeight()/2) / Settings.TILE_SIZE);
 		
-		if(collisionLayer.getCell(xval, yval) != null) {
-			//System.out.println("Cell available at: " + xval + " " + yval);
-			answer = true;
-		}
-		else if(collisionLayer.getCell(xval + 1, yval) != null) {
-			answer = true;
-		}
-		else if(collisionLayer.getCell(xval, yval + 1) != null) {
-			answer = true;
-		}
-		else if(collisionLayer.getCell(xval + 1, yval + 1) != null) {
-			answer = true;
-		}
-		else {
-			answer = false;
+		Corner leftdown = new Corner(xval, yval);
+		Corner leftup = new Corner(xval, yup);
+		Corner rightdown = new Corner(xup, yval);
+		Corner rightup = new Corner(xup, yup);
+		
+		switch(direction) {
+		case 0: //up direction
+			if(collisionLayer.getCell(leftup.x, leftup.y) != null || collisionLayer.getCell(rightup.x, rightup.y) != null) {
+				answer = true;
+			}
+			else
+				answer = false;
+		break;
+
+		case 1: //right direction
+			if(collisionLayer.getCell(rightdown.x, rightdown.y) != null || collisionLayer.getCell(rightup.x, rightup.y) != null) {
+				answer = true;
+			}
+			else
+				answer = false;
+		break;
+		case 2: //down direction
+			if(collisionLayer.getCell(leftdown.x, leftdown.y) != null || collisionLayer.getCell(rightdown.x, rightdown.y) != null) {
+				answer = true;
+			}
+			else
+				answer = false;
+			
+		break;
+		case 3: //left direction
+			if(collisionLayer.getCell(leftdown.x, leftdown.y) != null || collisionLayer.getCell(leftup.x, leftup.y) != null) {
+				answer = true;
+			}
+			else
+				answer = false;
+		break;
 		}
 		
-		//System.out.println(yval + " " + xval);
+		
+		
+		
+//		if(collisionLayer.getCell(leftdown.x, leftdown.y) != null) {
+//			//System.out.println("Cell availablFe at: " + xval + " " + yval);
+//			answer = true;
+//		}
+//		else if(collisionLayer.getCell(leftup.x, leftup.y) != null) {
+//			answer = true;
+//		}
+//		else if(collisionLayer.getCell(rightdown.x, rightdown.y) != null) {
+//			answer = true;
+//		}
+//		else if(collisionLayer.getCell(rightup.x, rightup.y) != null) {
+//			answer = true;
+//		}
+//		else {
+//			answer = false;
+//		}
+//		
 		
 		return answer;
+	}
+	
+	
+	private class Corner {
+		
+		public int x;
+		public int y;
+		
+		public Corner(int x, int y) {
+			this.x = x;
+			this.y = y;
+		}
 	}
 
 }

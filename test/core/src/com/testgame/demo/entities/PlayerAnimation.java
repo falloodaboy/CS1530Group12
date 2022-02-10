@@ -11,19 +11,21 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 public class PlayerAnimation {
 
 	
-	public TextureAtlas patlas;
-	public Animation<TextureRegion> walkNorth;
-	public Animation<TextureRegion> walkSouth;
-	public Animation<TextureRegion> walkEast;
-	public Animation<TextureRegion> walkWest;
+	private TextureAtlas patlas;
+	private Animation<TextureRegion> walkNorth;
+	private Animation<TextureRegion> walkSouth;
+	private Animation<TextureRegion> walkEast;
+	private Animation<TextureRegion> walkWest;
 	
+	private Animation<TextureRegion> currentSprite;
+	private int stateTime;
 	private Texture spriteSheet;
 
 	
 	
 	public PlayerAnimation(Texture sheet) {
 		this.spriteSheet = sheet;
-		
+		stateTime = 0;
 		
 	}
 	
@@ -41,6 +43,26 @@ public class PlayerAnimation {
 	}
 	
 	public void playWest() {
+		
+	}
+	
+	public void faceSouth() {
+		
+	}
+	
+	public void faceNorth() {
+		
+	}
+	
+	public void faceEast() {
+		
+	}
+	
+	public void faceWest() {
+		
+	}
+	
+	public void render(SpriteBatch batch) {
 		
 	}
 }
