@@ -98,8 +98,8 @@ public class TiledGameMap extends GameMap {
 		collisionLayer = (TiledMapTileLayer) tileMap.getLayers().get(layer);
 		int xval = ( ((int)x + Gdx.graphics.getWidth()/2) / Settings.TILE_SIZE);
 		int yval = ( ((int)y + Gdx.graphics.getHeight()/2) / Settings.TILE_SIZE);
-		int xup = ((int) x + Settings.PLAYER_WIDTH - 1 + Gdx.graphics.getWidth()/2) / Settings.TILE_SIZE;
-		int yup = ( ((int)y + Settings.PLAYER_HEIGHT - 1 + Gdx.graphics.getHeight()/2) / Settings.TILE_SIZE);
+		int xup = ((int) x + Settings.PLAYER_WIDTH + Gdx.graphics.getWidth()/2) / Settings.TILE_SIZE;
+		int yup = ( ((int)y + Settings.PLAYER_HEIGHT + Gdx.graphics.getHeight()/2) / Settings.TILE_SIZE);
 		
 		Corner leftdown = new Corner(xval, yval);
 		Corner leftup = new Corner(xval, yup);
