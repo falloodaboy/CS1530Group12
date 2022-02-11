@@ -18,6 +18,14 @@ public class MainMenuScreen implements Screen {
 	private GlyphLayout layout, layout2;
 	String title, message;
 	
+	private final float letterSpawnTime = .03f;
+	private float timer = 0;
+
+	private String drawTitle = "";
+	private String drawMessage = "";
+	private int stringIndexTitle = 0;
+	private int stringIndexMessage = 0;
+	
 	public MainMenuScreen(TerraRogueDemo game) {
 		this.game = game;
 		cam = new OrthographicCamera();
@@ -58,13 +66,30 @@ public class MainMenuScreen implements Screen {
 			this.dispose();
 		}
 		
+		Gdx.graphics.getDeltaTime();
 		game.batch.begin();
 		
+		// Test code
+		timer += delta;
+		
+		// Render title
+		if (timer >= letterSpawnTime && stringIndexTitle != title.length()) {
+			drawTitle = drawTitle + title.charAt(stringIndexTitle);
+			stringIndexTitle++;
+			timer -= letterSpawnTime;        
+		}
+		
+		// Render message
+		if (timer >= letterSpawnTime && stringIndexMessage != message.length()) {
+			drawMessage = drawMessage + message.charAt(stringIndexMessage);
+			stringIndexMessage++;
+			timer -= letterSpawnTime;        
+		}
+	
 		//Draw menu here
 		game.batch.draw(background, 0, 0, cam.viewportWidth, cam.viewportHeight);
-		mill.draw(game.batch, layout, (cam.viewportWidth)/2 - layout.width/2, cam.viewportHeight - 50);
-		font.draw(game.batch, layout2, cam.viewportWidth/2 - layout2.width/2, cam.viewportHeight - layout.height*2 - 50);
-		
+		mill.draw(game.batch, drawTitle, (cam.viewportWidth)/2 - layout.width/2, cam.viewportHeight - 50);
+		font.draw(game.batch, drawMessage, cam.viewportWidth/2 - layout2.width/2, cam.viewportHeight - layout.height*2 - 50);
 		
 		game.batch.end();
 		

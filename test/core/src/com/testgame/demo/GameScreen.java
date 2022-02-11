@@ -33,7 +33,7 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		ScreenUtils.clear(0, 0, 0, 2f, true);
+		ScreenUtils.clear(0, 1, 2f, 2f, true);
 		
 		//I can use camera position to set bounds on the map scrolling.
 		
