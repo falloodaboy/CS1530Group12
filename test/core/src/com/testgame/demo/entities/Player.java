@@ -17,11 +17,14 @@ public class Player extends Entity {
 	private Texture image;
 	private Texture spritesheet;
 	private PlayerAnimation panim;
+	private int lastPressed = -1;
+	
 	
 	public Player(float x, float y, TiledGameMap map) {
 		super(x, y, EntitiesType.PLAYER, map);
-		image = new Texture("player.png");
-		panim = new PlayerAnimation(spritesheet);
+		image = new Texture(Gdx.files.internal("player.png"));
+		spritesheet = new Texture(Gdx.files.internal("player2.png"));
+		panim = new PlayerAnimation(spritesheet, 64, 64);
 		
 	}
 
@@ -29,8 +32,8 @@ public class Player extends Entity {
 	public void render(OrthographicCamera cam, SpriteBatch batch) {
 		Vector3 playercoords = cam.project(new Vector3(this.getX(), this.getY(), 0));
 		
-		
-		batch.draw(image, playercoords.x, playercoords.y, Settings.TILE_SIZE, Settings.TILE_SIZE);
+		panim.render(batch, playercoords.x, playercoords.y);
+		//batch.draw(image, playercoords.x, playercoords.y, Settings.TILE_SIZE, Settings.TILE_SIZE);
 		this.update(cam, Gdx.graphics.getDeltaTime());
 		//cam.zoom = Settings.SCALE/2;
 		Vector3 position = cam.position;
@@ -47,6 +50,7 @@ public class Player extends Entity {
 	@Override
 	public void dispose() {
 		image.dispose();
+		panim.dispose();
 	}
 
 	@Override
@@ -54,19 +58,41 @@ public class Player extends Entity {
 		
 		if(Gdx.input.isKeyPressed(Keys.LEFT)) {
 			this.moveX(-EntitiesType.PLAYER.getSpeed(), 3);
+			panim.playEast();
+			lastPressed = 3;
 		}
 		else if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
 			this.moveX(EntitiesType.PLAYER.getSpeed(), 1);
+			panim.playWest();
+			lastPressed = 1;
 		}
 		else if(Gdx.input.isKeyPressed(Keys.UP)) {
 			this.moveY(EntitiesType.PLAYER.getSpeed(), 0);
+			panim.playNorth();
+			lastPressed = 0;
 		}
 		else if(Gdx.input.isKeyPressed(Keys.DOWN)) {
 			this.moveY(-EntitiesType.PLAYER.getSpeed(), 2);
+			panim.playSouth();
+			lastPressed = 2;
 		}
 		else {
-			//reset the player anim to whichever direction is necessary
-			//System.out.println("Player.java: update: Wrong input detected");
+			//player should stand facing the direction based on which key was last pressed.
+			
+			switch(lastPressed) {
+				case 0:
+					panim.faceNorth();
+				break;
+				case 1:
+					panim.faceWest();
+				break;
+				case 2:
+					panim.faceSouth();
+				break;
+				case 3:
+					panim.faceEast();
+				break;
+			}
 		}
 	}
 
@@ -77,7 +103,6 @@ public class Player extends Entity {
 			pos.y = newY;
 		}
 		else {
-			
 		}
 	}
 
@@ -89,7 +114,6 @@ public class Player extends Entity {
 			pos.x = newX;
 		}
 		else {
-			//System.out.println("Colliding with map objects");
 		}
 		
 	}

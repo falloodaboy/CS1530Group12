@@ -3,6 +3,7 @@ package com.testgame.demo.world;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,17 +19,16 @@ import com.testgame.demo.entities.Player;
 public class TiledGameMap extends GameMap {
 
 	
-	TiledMap tileMap;
-	TiledMapTileLayer collisionLayer;
-	OrthogonalTiledMapRenderer maprenderer;
-	Texture background;
+	private TiledMap tileMap;
+	private TiledMapTileLayer collisionLayer;
+	private OrthogonalTiledMapRenderer maprenderer;
+	private Texture background;
 	
 	public TiledGameMap() {
 		tileMap = new TmxMapLoader().load("basemap.tmx");
 		maprenderer = new OrthogonalTiledMapRenderer(tileMap);
 		background = new Texture("Background.png");
 		entities = new ArrayList<>();
-		
 		entities.add(new Player(0, 0, this));
 	}
 	
@@ -137,28 +137,7 @@ public class TiledGameMap extends GameMap {
 			else
 				answer = false;
 		break;
-		}
-		
-		
-		
-		
-//		if(collisionLayer.getCell(leftdown.x, leftdown.y) != null) {
-//			//System.out.println("Cell availablFe at: " + xval + " " + yval);
-//			answer = true;
-//		}
-//		else if(collisionLayer.getCell(leftup.x, leftup.y) != null) {
-//			answer = true;
-//		}
-//		else if(collisionLayer.getCell(rightdown.x, rightdown.y) != null) {
-//			answer = true;
-//		}
-//		else if(collisionLayer.getCell(rightup.x, rightup.y) != null) {
-//			answer = true;
-//		}
-//		else {
-//			answer = false;
-//		}
-//		
+		}	
 		
 		return answer;
 	}
