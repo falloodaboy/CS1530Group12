@@ -8,6 +8,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
+import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.testgame.demo.world.TiledGameMap;
 
@@ -18,6 +19,7 @@ public class GameScreen implements Screen {
 	public TerraRogueDemo game;
 	public OrthographicCamera cam;
 	public Music bgm;
+	private BoundingBox box;
 	
 	public GameScreen(TerraRogueDemo game) {
 		this.game = game;
