@@ -6,14 +6,19 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
@@ -27,16 +32,14 @@ public class InventoryScreen implements Screen {
 	//
 	
 	private Stage stage;
-	private TextureAtlas ui;
-	private Texture ref;
 	
 	
 	private Skin skin;
 	private Table root; //root table for the inventory screen.
 	private Table inventory; //inventory display for character (using DragAndDrop class)
-	private DragAndDrop dnd;
-	private Button testButton;
-	private Label testLabel;
+	private Window window;
+	private DragAndDrop dnd; //used for Drag and Drop of items in list
+	private TextureAtlas atlas;
 	private Game game; //Game object which sets the screens
 	private OrthographicCamera cam; //Camera looking into the world.
 	private GameScreen gamescreen; //game screen to return to after player is done doing inventory stuff.
@@ -46,8 +49,6 @@ public class InventoryScreen implements Screen {
 		this.game = game;
 		this.cam = cam;
 		this.gamescreen = gamescreen;
-		ref = new Texture(Gdx.files.internal("craftacular-ui.png"));
-		ui = new TextureAtlas(Gdx.files.internal("craftacular-ui.atlas"));
 		
 		
 	}
@@ -56,19 +57,34 @@ public class InventoryScreen implements Screen {
 	@Override
 	public void show() {
 		stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
-		skin = new Skin(Gdx.files.internal("craftacular-ui.json"));
 		Gdx.input.setInputProcessor(stage);
+		
+		skin = new Skin(Gdx.files.internal("craftacular-ui.json"));
+		atlas = new TextureAtlas(Gdx.files.internal("craftacular-ui.atlas"));
+		inventory = new Table(skin);
+		window = new Window("", skin);
+		inventory.setWidth(100);
+		inventory.setHeight(100);
+		inventory.setColor(skin.getColor("gray"));	
+		
+		for(int i=0; i < 5; i++) {
+			for(int j=0; j < 5;j++) {
+				inventory.add(new Image(skin.getRegion("dirt")));
+			}
+			inventory.row();
+		}
+		
+		
 		root = new Table();
 		root.setFillParent(true);
-		root.center();
+		root.top();
 		
-		testLabel = new Label("test", skin);
-		testButton = new TextButton("test", skin);
+		window.add(new Label("Inventory", skin));
+		window.row();
+		window.add(inventory);
 		
+		root.add(window);
 		
-		
-		root.add(testLabel);
-		root.add(testButton);
 		stage.addActor(root);
 	}
 
@@ -109,6 +125,7 @@ public class InventoryScreen implements Screen {
 	public void dispose() {
 		stage.dispose();
 		skin.dispose();
+		atlas.dispose();
 	}
 
 }
