@@ -101,7 +101,7 @@ public class InventoryScreen implements Screen {
 		
 		
 		stage.draw();
-		stage.act(Gdx.graphics.getDeltaTime());
+		stage.act(delta);
 		
 		if(Gdx.input.isKeyJustPressed(Keys.I)) {
 			Gdx.input.setInputProcessor(null);
@@ -112,8 +112,7 @@ public class InventoryScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
-		//stage.getViewport().setScreenSize(width, height);
-		stage.getViewport().setWorldSize(width, height);
+		//stage.getViewport().setWorldSize(width, height);
 		stage.getViewport().update(width, height);
 	}
 

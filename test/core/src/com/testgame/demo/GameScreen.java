@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.testgame.demo.world.TiledGameMap;
 
@@ -34,6 +35,7 @@ public class GameScreen implements Screen {
 		catch(Exception e) {
 			System.out.println(e);
 		}
+		
 	}
 	
 	
@@ -52,6 +54,11 @@ public class GameScreen implements Screen {
 		
 		if(Gdx.input.isKeyJustPressed(Keys.I)) {
 			game.setScreen(new InventoryScreen(game, cam, this));
+			this.pause();
+		}
+		
+		else if(Gdx.input.isKeyJustPressed(Keys.P)) {
+			game.setScreen(new PauseScreen(game, cam, this));
 			this.pause();
 		}
 	}
