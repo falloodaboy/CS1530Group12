@@ -11,11 +11,13 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
@@ -67,9 +69,11 @@ public class InventoryScreen implements Screen {
 		inventory.setHeight(100);
 		inventory.setColor(skin.getColor("gray"));	
 		
-		for(int i=0; i < 5; i++) {
-			for(int j=0; j < 5;j++) {
-				inventory.add(new Image(skin.getRegion("dirt")));
+		for(int i=0; i < 10; i++) {
+			for(int j=0; j < 10;j++) {
+				Cell<Image> cell = inventory.add(new Image(skin.getRegion("dirt")));
+				cell.prefHeight(200);
+				cell.prefWidth(200);
 			}
 			inventory.row();
 		}
@@ -79,11 +83,14 @@ public class InventoryScreen implements Screen {
 		root.setFillParent(true);
 		root.top();
 		
-		window.add(new Label("Inventory", skin));
+		Cell<Label> title = window.add(new Label("Inventory", skin));
+		title.padRight(Value.percentWidth(0.5f, window));
 		window.row();
 		window.add(inventory);
 		
-		root.add(window);
+		Cell<Window> wind = root.add(window);
+		//wind.prefHeight(100);
+		//wind.prefWidth(100);
 		
 		stage.addActor(root);
 	}
@@ -105,6 +112,8 @@ public class InventoryScreen implements Screen {
 
 	@Override
 	public void resize(int width, int height) {
+		//stage.getViewport().setScreenSize(width, height);
+		stage.getViewport().setWorldSize(width, height);
 		stage.getViewport().update(width, height);
 	}
 
