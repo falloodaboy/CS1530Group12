@@ -143,6 +143,11 @@ public class TiledGameMap extends GameMap {
 	}
 	
 	
+	public void saveGame() {
+		
+	}
+	
+	
 	private class Corner {
 		
 		public int x;

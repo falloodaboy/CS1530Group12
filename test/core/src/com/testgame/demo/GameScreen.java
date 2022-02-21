@@ -63,10 +63,6 @@ public class GameScreen implements Screen {
 		}
 	}
 
-	@Override
-	public void resize(int width, int height) {
-
-	}
 
 	@Override
 	public void pause() {
@@ -87,6 +83,18 @@ public class GameScreen implements Screen {
 		this.gamemap.dispose();
 		bgm.dispose();
 
+	}
+
+	
+	public void saveGame() {
+		gamemap.saveGame();
+	}
+	
+	
+	
+	@Override
+	public void resize(int width, int height) {
+		
 	}
 
 }

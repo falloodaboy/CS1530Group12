@@ -97,7 +97,7 @@ public class InventoryScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
-		ScreenUtils.clear(1, 0, 0, 1, true);
+		ScreenUtils.clear(0, 0, 0, 1, true);
 		
 		
 		stage.draw();
