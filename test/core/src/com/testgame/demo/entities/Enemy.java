@@ -9,10 +9,13 @@ import com.testgame.demo.world.TiledGameMap;
 public class Enemy extends Entity {
 
 	
-	Texture image;
+	private Texture image;
+	private double points;
+	private EnemyAnimation eanim;
 	
 	public Enemy(float x, float y, EntitiesType type, TiledGameMap map, Texture image) {
 		super(x, y, type, map);
+		points = 0;
 	}
 
 	@Override
@@ -23,6 +26,7 @@ public class Enemy extends Entity {
 	@Override
 	public void dispose() {
 		image.dispose();
+		eanim.dispose();
 		
 	}
 
@@ -34,13 +38,13 @@ public class Enemy extends Entity {
 
 	@Override
 	public void moveX(float amount, int direction) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 	@Override
 	public void moveY(float amount, int direction) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 

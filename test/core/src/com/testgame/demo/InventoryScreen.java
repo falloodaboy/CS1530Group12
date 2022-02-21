@@ -83,7 +83,7 @@ public class InventoryScreen implements Screen {
 		root.setFillParent(true);
 		root.top();
 		
-		Cell<Label> title = window.add(new Label("Inventory", skin));
+		Cell<Label> title = window.add();
 		title.padRight(Value.percentWidth(0.5f, window));
 		window.row();
 		window.add(inventory);

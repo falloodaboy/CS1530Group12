@@ -162,7 +162,7 @@ public class PauseScreen implements Screen {
 	 * the items the player has, 
 	 * the player's location in the world, 
 	 * and the list of enemies currently in the game.
-	 * */
+	 */
 	public void saveGame() {
 		gameScreen.saveGame();
 	}

@@ -18,13 +18,14 @@ public class Player extends Entity {
 	private Texture spritesheet;
 	private PlayerAnimation panim;
 	private int lastPressed = -1;
-	
+	private double score;
 	
 	public Player(float x, float y, TiledGameMap map) {
 		super(x, y, EntitiesType.PLAYER, map);
 		image = new Texture(Gdx.files.internal("player.png"));
 		spritesheet = new Texture(Gdx.files.internal("player2.png"));
 		panim = new PlayerAnimation(spritesheet, 64, 64);
+		score = 0;
 		
 	}
 
