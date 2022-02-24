@@ -45,7 +45,7 @@ public class InventoryScreen implements Screen {
 	private Game game; //Game object which sets the screens
 	private OrthographicCamera cam; //Camera looking into the world.
 	private GameScreen gamescreen; //game screen to return to after player is done doing inventory stuff.
-	
+	private TextureAtlas tdsatlas;
 	
 	public InventoryScreen(Game game, OrthographicCamera cam, GameScreen gamescreen) {
 		this.game = game;
@@ -63,17 +63,19 @@ public class InventoryScreen implements Screen {
 		
 		skin = new Skin(Gdx.files.internal("craftacular-ui.json"));
 		atlas = new TextureAtlas(Gdx.files.internal("craftacular-ui.atlas"));
+		tdsatlas = new TextureAtlas(Gdx.files.internal("tdsassets.txt"));
 		inventory = new Table(skin);
 		window = new Window("", skin);
 		inventory.setWidth(100);
 		inventory.setHeight(100);
 		inventory.setColor(skin.getColor("gray"));	
 		
-		for(int i=0; i < 10; i++) {
-			for(int j=0; j < 10;j++) {
-				Cell<Image> cell = inventory.add(new Image(skin.getRegion("dirt")));
-				cell.prefHeight(200);
-				cell.prefWidth(200);
+		for(int i=0; i < 5; i++) {
+			for(int j=0; j < 5;j++) {
+				Cell<Image> cell = inventory.add(new Image(tdsatlas.findRegion("Inventory Cell")));
+				//cell.space(1, 1, 1, 1);
+				cell.prefHeight(100);
+				cell.prefWidth(100);
 			}
 			inventory.row();
 		}
@@ -83,7 +85,7 @@ public class InventoryScreen implements Screen {
 		root.setFillParent(true);
 		root.top();
 		
-		Cell<Label> title = window.add();
+		Cell<Label> title = window.add(new Label("Inventory", skin));
 		title.padRight(Value.percentWidth(0.5f, window));
 		window.row();
 		window.add(inventory);
@@ -134,6 +136,7 @@ public class InventoryScreen implements Screen {
 		stage.dispose();
 		skin.dispose();
 		atlas.dispose();
+		tdsatlas.dispose();
 	}
 
 }

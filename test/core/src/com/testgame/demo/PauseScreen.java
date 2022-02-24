@@ -7,6 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -37,11 +38,14 @@ public class PauseScreen implements Screen {
 	private Skin skin;
 	private GameScreen gameScreen;
 	private Window window;
+	private TextureAtlas testAtlas;
 	
 	public PauseScreen(Game game, OrthographicCamera cam, GameScreen gameScreen) {
 		this.game = game;
 		this.cam = cam;
 		this.gameScreen = gameScreen;
+		testAtlas = new TextureAtlas(Gdx.files.internal("tdsassets.txt"));
+		
 	}
 	
 	
@@ -59,6 +63,8 @@ public class PauseScreen implements Screen {
 		save = new TextButton("Save Game", skin);
 		resume = new TextButton("Resume", skin);
 		exit = new TextButton("Exit", skin);
+		
+
 		
 		
 		exit.addListener(new InputListener() {
