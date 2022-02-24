@@ -10,7 +10,7 @@ to add it to the master, please consult the Merge Master beforehand. Once the Me
 
 ## Merge Master:
 ```
-TBD
+Sprint 0: Jacob Enriquez
 
 ```
 
