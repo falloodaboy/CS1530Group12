@@ -38,13 +38,11 @@ public class PauseScreen implements Screen {
 	private Skin skin;
 	private GameScreen gameScreen;
 	private Window window;
-	private TextureAtlas testAtlas;
 	
 	public PauseScreen(Game game, OrthographicCamera cam, GameScreen gameScreen) {
 		this.game = game;
 		this.cam = cam;
 		this.gameScreen = gameScreen;
-		testAtlas = new TextureAtlas(Gdx.files.internal("tdsassets.txt"));
 		
 	}
 	

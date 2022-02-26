@@ -57,8 +57,13 @@ public class GameScreen implements Screen {
 			this.pause();
 		}
 		
-		else if(Gdx.input.isKeyJustPressed(Keys.P)) {
+		if(Gdx.input.isKeyJustPressed(Keys.P)) {
 			game.setScreen(new PauseScreen(game, cam, this));
+			this.pause();
+		}
+		
+		if(Gdx.input.isKeyJustPressed(Keys.T)) {
+			game.setScreen(new TestScreen(game, cam, this));
 			this.pause();
 		}
 	}

@@ -1,0 +1,132 @@
+{
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	bold: {
+		file: font-bold-export.fnt
+	}
+	font: {
+		file: font-export.fnt
+	}
+	title: {
+		file: font-title-export.fnt
+	}
+}
+com.badlogic.gdx.graphics.Color: {
+	gray: {
+		r: 0.55
+		g: 0.55
+		b: 0.55
+		a: 1
+	}
+	green: {
+		r: 0.03529522
+		g: 0.77666664
+		b: 0
+		a: 1
+	}
+	white: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	default: {
+		up: Button BG shadow
+		over: Button BG shadow
+		disabled: Button BG shadow
+	}
+	BG: {
+		up: Button BG shadow
+		over: Button BG shadow
+		disabled: Button BG shadow
+	}
+	OK: {
+		up: BTN OK
+		over: BTN OK
+		disabled: BTN OK
+	}
+	PLAY: {
+		up: BTN PLAY
+		over: BTN PLAY
+		disabled: BTN PLAY
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ImageButton$ImageButtonStyle: {
+	default: {
+		up: Button BG shadow
+		over: Button BG shadow
+		disabled: Button BG shadow
+	}
+
+	OK: {
+		up: BTN OK
+		over: BTN OK
+		disabled: BTN OK
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.ImageTextButton$ImageTextButtonStyle: {
+	default: {
+		font: font
+		up: Button BG shadow
+		over: Button BG shadow
+		disabled: Button BG shadow
+	}
+
+	BG: {
+		font: font
+		up: Button BG shadow
+		over: Button BG shadow
+		disabled: Button BG shadow
+	}
+
+	OK: {
+		font: font
+		up: BTN OK
+		over: BTN OK
+		disabled: BTN OK
+	}
+
+	PLAY: {
+		font: font
+		up: BTN PLAY
+		over: BTN PLAY
+		disabled: BTN PLAY
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: font
+	}
+	dim: {
+		font: font
+		fontColor: gray
+	}
+	bold: {
+		font: bold
+	}
+	title: {
+		font: title
+	}
+	xp: {
+		font: bold
+		fontColor: green
+	}
+}
+
+com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
+	default: {
+		font: font
+		up: Button BG shadow
+		over: Button BG shadow
+		disabled: Button BG shadow
+	}
+}
+
+com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
+	default: {
+		background: Background
+		titleFont: font
+	}
+}
+}
