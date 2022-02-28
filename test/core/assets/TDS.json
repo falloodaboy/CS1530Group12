@@ -128,5 +128,15 @@ com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 		background: Background
 		titleFont: font
 	}
+
+	Cell: {
+		background: Inventory Cell
+		titleFont: font
+	}
+
+	Bonus3: {
+		background: Bonus 03
+		titleFont: font
+	}
 }
 }

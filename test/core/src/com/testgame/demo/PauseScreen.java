@@ -40,6 +40,7 @@ public class PauseScreen implements Screen {
 	private Window window;
 	
 	public PauseScreen(Game game, OrthographicCamera cam, GameScreen gameScreen) {
+		
 		this.game = game;
 		this.cam = cam;
 		this.gameScreen = gameScreen;

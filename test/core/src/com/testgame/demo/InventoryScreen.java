@@ -73,7 +73,6 @@ public class InventoryScreen implements Screen {
 		for(int i=0; i < 5; i++) {
 			for(int j=0; j < 5;j++) {
 				Cell<Image> cell = inventory.add(new Image(tdsatlas.findRegion("Inventory Cell")));
-				//cell.space(1, 1, 1, 1);
 				cell.prefHeight(100);
 				cell.prefWidth(100);
 			}
