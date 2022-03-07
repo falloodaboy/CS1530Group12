@@ -63,7 +63,7 @@ public class InventoryScreen implements Screen {
 		
 		skin = new Skin(Gdx.files.internal("craftacular-ui.json"));
 		atlas = new TextureAtlas(Gdx.files.internal("craftacular-ui.atlas"));
-		tdsatlas = new TextureAtlas(Gdx.files.internal("tdsassets.txt"));
+		tdsatlas = new TextureAtlas(Gdx.files.internal("TDS.atlas"));
 		inventory = new Table(skin);
 		window = new Window("", skin);
 		inventory.setWidth(100);
@@ -73,7 +73,6 @@ public class InventoryScreen implements Screen {
 		for(int i=0; i < 5; i++) {
 			for(int j=0; j < 5;j++) {
 				Cell<Image> cell = inventory.add(new Image(tdsatlas.findRegion("Inventory Cell")));
-				//cell.space(1, 1, 1, 1);
 				cell.prefHeight(100);
 				cell.prefWidth(100);
 			}
