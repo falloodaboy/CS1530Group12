@@ -9,9 +9,11 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -21,6 +23,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -36,7 +40,7 @@ public class InventoryScreen implements Screen {
 	
 	
 	private Stage stage;
-	private int base = 40;
+	private float base = 0.07f;
 	
 	private Skin skin;
 	//private Table root; //root table for the inventory screen.
@@ -56,6 +60,7 @@ public class InventoryScreen implements Screen {
 		this.cam = cam;
 		this.gamescreen = gamescreen;
 		cells =  new Stack[5][10];
+		dnd = new DragAndDrop();
 	}
 	
 	
@@ -68,28 +73,53 @@ public class InventoryScreen implements Screen {
 		tdsatlas = new TextureAtlas(Gdx.files.internal("TDS.atlas"));
 		inventory = new Table(skin);
 		window = new Window("", skin);
-		
 		inventory.setColor(skin.getColor("gray"));	
+		window.setFillParent(true);
+		
 		for(int i=0; i < 5; i++) {
 			for(int j=0; j < 10;j++) {
-				Stack stack = new Stack(new Image(tdsatlas.findRegion("Inventory Cell")));
-				Cell<Stack> cell = inventory.add(stack);
-				cell.prefHeight(base);
-				cell.prefWidth(base);
+				Stack stack = new Stack();
+				
+				final Image imger = new Image(tdsatlas.findRegion("Inventory Cell"));
+
+				stack.add(imger);
+				final Cell<Stack> cell = inventory.add(stack);
+				cell.prefHeight(base*Gdx.graphics.getWidth());
+				cell.prefWidth(base*Gdx.graphics.getWidth());
+				cell.maxWidth(100);
+				cell.maxHeight(100);
 				cells[i][j] = cell.getActor(); //get reference to the inventory stack object for drag and drop later.
 			}
 			inventory.row();
 		}
 		
+		
+		for(int i=0; i < cells.length; i++) {
+			for(int j=0; j < cells[i].length; j++) {
+				final Stack stack = cells[i][j];
+				dnd.addSource(new Source(stack) {
+					
+					final Payload payload = new Payload();
+					
+					@Override
+					public Payload dragStart(InputEvent event, float x, float y, int pointer) {
+						payload.setObject(stack.getChild(0));
+						payload.setDragActor(stack.getChild(0));
+						stack.getChild(0).remove();
+						return payload;
+					}
+				});
+				
+				
+			}
+		}
 
-		window.setFillParent(true);
+		
 		Cell<Label> title = window.add(new Label("Inventory", skin)).left();
 		window.row();
-		window.add(inventory);
-		
-		window.top();
+		Cell<Table> inv = window.add(inventory);
+		//window.top();
 		stage.addActor(window);
-		
 	
 	}
 
@@ -111,7 +141,7 @@ public class InventoryScreen implements Screen {
 	@Override
 	public void resize(int width, int height) {
 		//stage.getViewport().setWorldSize(width, height);
-		stage.getViewport().update(width, height);
+		stage.getViewport().update(width, height, true);
 	}
 
 	@Override
