@@ -185,6 +185,21 @@
         </struct>
         <key>individualSpriteSettings</key>
         <map type="IndividualSpriteSettingsMap">
+            <key type="filename">test/core/assets/potion.jpg</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>16,16,32,32</rect>
+                <key>scale9Paddings</key>
+                <rect>16,16,32,32</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
             <key type="filename">../TDS/PNG/Bonus/Bonus 02.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -546,6 +561,7 @@
             <filename>../gdx-skins/craftacular/raw/font-export.png</filename>
             <filename>../gdx-skins/craftacular/raw/font-bold-export.png</filename>
             <filename>../gdx-skins/craftacular/raw/window.9.png</filename>
+            <filename>test/core/assets/potion.jpg</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

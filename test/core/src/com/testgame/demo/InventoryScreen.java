@@ -9,17 +9,24 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Cell;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -31,28 +38,31 @@ public class InventoryScreen implements Screen {
 	//should we create a new instance of this screen every time the player presses pause?
 	//and delete this instance whenever the screen is hidden again?
 	
-	//
+	//could set some fields with the difference in height/width and resize the cells in the inventory accordingly whenever resize occurs
+	
 	
 	private Stage stage;
-	
+	private float base = 0.07f;
 	
 	private Skin skin;
-	private Table root; //root table for the inventory screen.
+	//private Table root; //root table for the inventory screen.
 	private Table inventory; //inventory display for character (using DragAndDrop class)
 	private Window window;
 	private DragAndDrop dnd; //used for Drag and Drop of items in list
-	private TextureAtlas atlas;
 	private Game game; //Game object which sets the screens
 	private OrthographicCamera cam; //Camera looking into the world.
 	private GameScreen gamescreen; //game screen to return to after player is done doing inventory stuff.
 	private TextureAtlas tdsatlas;
+	private Stack[][] cells;
 	
+	
+
 	public InventoryScreen(Game game, OrthographicCamera cam, GameScreen gamescreen) {
 		this.game = game;
 		this.cam = cam;
 		this.gamescreen = gamescreen;
-		
-		
+		cells =  new Stack[5][10];
+		dnd = new DragAndDrop();
 	}
 	
 	
@@ -61,39 +71,90 @@ public class InventoryScreen implements Screen {
 		stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		Gdx.input.setInputProcessor(stage);
 		
-		skin = new Skin(Gdx.files.internal("craftacular-ui.json"));
-		atlas = new TextureAtlas(Gdx.files.internal("craftacular-ui.atlas"));
+		skin = new Skin(Gdx.files.internal("TDS.json"));
 		tdsatlas = new TextureAtlas(Gdx.files.internal("TDS.atlas"));
 		inventory = new Table(skin);
 		window = new Window("", skin);
-		inventory.setWidth(100);
-		inventory.setHeight(100);
 		inventory.setColor(skin.getColor("gray"));	
+		window.setFillParent(true);
 		
 		for(int i=0; i < 5; i++) {
-			for(int j=0; j < 5;j++) {
-				Cell<Image> cell = inventory.add(new Image(tdsatlas.findRegion("Inventory Cell")));
-				cell.prefHeight(100);
-				cell.prefWidth(100);
+			for(int j=0; j < 10;j++) {
+				Stack stack = new Stack();
+				
+				final Image imger = new Image(tdsatlas.findRegion("Inventory Cell"));
+				final Image item = new Image(tdsatlas.findRegion("potion"));
+				stack.add(imger);
+				
+				
+				if(j == 1)
+					stack.add(item);
+				
+				final Cell<Stack> cell = inventory.add(stack);
+				cell.prefHeight(base*Gdx.graphics.getWidth());
+				cell.prefWidth(base*Gdx.graphics.getWidth());
+				cell.maxWidth(100);
+				cell.maxHeight(100);
+				cells[i][j] = cell.getActor(); //get reference to the inventory stack object for drag and drop later.
 			}
 			inventory.row();
 		}
 		
 		
-		root = new Table();
-		root.setFillParent(true);
-		root.top();
+		for(int i=0; i < cells.length; i++) {
+			for(int j=0; j < cells[i].length; j++) {
+				final Stack stack = cells[i][j];
+				dnd.addSource(new Source(stack) {
+					
+					final Payload payload = new Payload();
+					@Override
+					public Payload dragStart(InputEvent event, float x, float y, int pointer) {
+						
+						int top = stack.getChildren().size - 1;
+						if(top > 0) {
+							payload.setObject(stack.getChild(top));
+							payload.setDragActor(stack.getChild(top));
+							stack.getChild(top).remove();
+						}
+						return payload;
+//						payload.setObject(stack.getChild(top));
+//						payload.setDragActor(stack.getChild(top));
+//						stack.getChild(top).remove();
+//						return payload;
+					}
+					
+					@Override
+					public void dragStop(InputEvent event, float x, float y, int pointer, Payload payload, Target target) {
+						if(target == null && payload.getObject() != null) {
+							stack.add((Actor) payload.getObject());
+						}
+					}
+				});
+				
+				dnd.addTarget(new Target(stack) {
+
+					@Override
+					public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
+						return !(stack.getChildren().size >= 2);
+					}
+
+					@Override
+					public void drop(Source source, Payload payload, float x, float y, int pointer) {
+						if(stack.getChildren().size < 2 && payload.getObject() != null)
+							stack.add((Actor) payload.getObject());
+					}
+					
+				});
+			}
+		}
+
 		
-		Cell<Label> title = window.add(new Label("Inventory", skin));
-		title.padRight(Value.percentWidth(0.5f, window));
+		Cell<Label> title = window.add(new Label("Inventory", skin)).left();
 		window.row();
-		window.add(inventory);
-		
-		Cell<Window> wind = root.add(window);
-		//wind.prefHeight(100);
-		//wind.prefWidth(100);
-		
-		stage.addActor(root);
+		Cell<Table> inv = window.add(inventory);
+		//window.top();
+		stage.addActor(window);
+	
 	}
 
 	@Override
@@ -114,7 +175,7 @@ public class InventoryScreen implements Screen {
 	@Override
 	public void resize(int width, int height) {
 		//stage.getViewport().setWorldSize(width, height);
-		stage.getViewport().update(width, height);
+		stage.getViewport().update(width, height, true);
 	}
 
 	@Override
@@ -134,7 +195,6 @@ public class InventoryScreen implements Screen {
 	public void dispose() {
 		stage.dispose();
 		skin.dispose();
-		atlas.dispose();
 		tdsatlas.dispose();
 	}
 
