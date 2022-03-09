@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -25,6 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Payload;
 import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Source;
+import com.badlogic.gdx.scenes.scene2d.utils.DragAndDrop.Target;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -81,8 +83,13 @@ public class InventoryScreen implements Screen {
 				Stack stack = new Stack();
 				
 				final Image imger = new Image(tdsatlas.findRegion("Inventory Cell"));
-
+				final Image item = new Image(tdsatlas.findRegion("potion"));
 				stack.add(imger);
+				
+				
+				if(j == 1)
+					stack.add(item);
+				
 				final Cell<Stack> cell = inventory.add(stack);
 				cell.prefHeight(base*Gdx.graphics.getWidth());
 				cell.prefWidth(base*Gdx.graphics.getWidth());
@@ -100,17 +107,44 @@ public class InventoryScreen implements Screen {
 				dnd.addSource(new Source(stack) {
 					
 					final Payload payload = new Payload();
-					
 					@Override
 					public Payload dragStart(InputEvent event, float x, float y, int pointer) {
-						payload.setObject(stack.getChild(0));
-						payload.setDragActor(stack.getChild(0));
-						stack.getChild(0).remove();
+						
+						int top = stack.getChildren().size - 1;
+						if(top > 0) {
+							payload.setObject(stack.getChild(top));
+							payload.setDragActor(stack.getChild(top));
+							stack.getChild(top).remove();
+						}
 						return payload;
+//						payload.setObject(stack.getChild(top));
+//						payload.setDragActor(stack.getChild(top));
+//						stack.getChild(top).remove();
+//						return payload;
+					}
+					
+					@Override
+					public void dragStop(InputEvent event, float x, float y, int pointer, Payload payload, Target target) {
+						if(target == null && payload.getObject() != null) {
+							stack.add((Actor) payload.getObject());
+						}
 					}
 				});
 				
-				
+				dnd.addTarget(new Target(stack) {
+
+					@Override
+					public boolean drag(Source source, Payload payload, float x, float y, int pointer) {
+						return !(stack.getChildren().size >= 2);
+					}
+
+					@Override
+					public void drop(Source source, Payload payload, float x, float y, int pointer) {
+						if(stack.getChildren().size < 2 && payload.getObject() != null)
+							stack.add((Actor) payload.getObject());
+					}
+					
+				});
 			}
 		}
 

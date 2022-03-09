@@ -26,7 +26,7 @@ BG
   index: -1
 Bonus 02
   rotate: false
-  xy: 824, 51
+  xy: 888, 51
   size: 55, 83
   orig: 55, 83
   offset: 0, 0
@@ -96,7 +96,7 @@ font-title-export
   index: -1
 HP ARMOR AMMO HUD
   rotate: false
-  xy: 680, 51
+  xy: 744, 51
   size: 144, 72
   orig: 144, 72
   offset: 0, 0
@@ -155,6 +155,13 @@ Money Panel HUD
   xy: 658, 8
   size: 48, 26
   orig: 48, 26
+  offset: 0, 0
+  index: -1
+potion
+  rotate: false
+  xy: 680, 51
+  size: 64, 64
+  orig: 64, 64
   offset: 0, 0
   index: -1
 Star
