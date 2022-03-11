@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
@@ -54,7 +55,7 @@ public class InventoryScreen implements Screen {
 	private GameScreen gamescreen; //game screen to return to after player is done doing inventory stuff.
 	private TextureAtlas tdsatlas;
 	private Stack[][] cells;
-	
+	private Music inventorySound;
 	
 
 	public InventoryScreen(Game game, OrthographicCamera cam, GameScreen gamescreen) {
@@ -63,11 +64,19 @@ public class InventoryScreen implements Screen {
 		this.gamescreen = gamescreen;
 		cells =  new Stack[5][10];
 		dnd = new DragAndDrop();
+		try {
+			inventorySound = Gdx.audio.newMusic(Gdx.files.internal("inventoryOpen.mp3"));
+			inventorySound.setVolume(0.4f);
+		} catch(Exception e) {
+			System.out.print(e);
+		}
 	}
 	
 	
 	@Override
 	public void show() {
+		inventorySound.play();
+		
 		stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		Gdx.input.setInputProcessor(stage);
 		
@@ -169,6 +178,7 @@ public class InventoryScreen implements Screen {
 			Gdx.input.setInputProcessor(null);
 			game.setScreen(gamescreen);
 			this.dispose();
+			inventorySound.play();
 		}
 	}
 
@@ -196,6 +206,7 @@ public class InventoryScreen implements Screen {
 		stage.dispose();
 		skin.dispose();
 		tdsatlas.dispose();
+		inventorySound.dispose();
 	}
 
 }
