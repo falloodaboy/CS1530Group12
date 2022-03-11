@@ -30,7 +30,9 @@ public class GameScreen implements Screen {
 		cam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		cam.update();
 		try {
-			bgm = Gdx.audio.newMusic(Gdx.files.internal(""));
+			bgm = Gdx.audio.newMusic(Gdx.files.internal("kiliansWake.mp3"));
+			bgm.setVolume(0.2f);
+			bgm.setLooping(true);
 		}
 		catch(Exception e) {
 			System.out.println(e);
@@ -47,6 +49,8 @@ public class GameScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		ScreenUtils.clear(0, 0, 0, 2f, true);
+		
+		bgm.play();
 		
 		//I can use camera position to set bounds on the map scrolling.
 		

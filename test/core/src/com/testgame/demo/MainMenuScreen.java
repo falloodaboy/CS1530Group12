@@ -20,7 +20,7 @@ public class MainMenuScreen implements Screen {
 	public Texture background;
 	private GlyphLayout layout, layout2;
 	
-	private Music bgm;
+	private Music bgm, textSound, selectSound;
 	
 	String title, message;
 	
@@ -51,9 +51,15 @@ public class MainMenuScreen implements Screen {
 			mill = new BitmapFont(Gdx.files.internal("FutureMillennium.fnt"));
 			mill.setColor(Color.WHITE);
 			layout = new GlyphLayout(mill, title);
-			bgm = Gdx.audio.newMusic(Gdx.files.internal("DragonBall-Z Tapion Melody (Royalty Free Anime Music).mp3"));
-			bgm.setVolume(0.3f);
+			bgm = Gdx.audio.newMusic(Gdx.files.internal("deathnote.mp3"));
+			bgm.setVolume(0.1f);
 			bgm.setLooping(true);
+			
+			textSound = Gdx.audio.newMusic(Gdx.files.internal("textSound.wav"));
+			textSound.setVolume(0.8f);
+			
+			selectSound = Gdx.audio.newMusic(Gdx.files.internal("selectSound.mp3"));
+			selectSound.setVolume(0.4f);
 			
 		}
 		catch(Exception e) {
@@ -76,6 +82,8 @@ public class MainMenuScreen implements Screen {
 			if(Gdx.input.isTouched()) {
 				this.game.setScreen(new GameScreen(this.game));
 				this.dispose();
+				textSound.dispose();
+				selectSound.play();
 			}
 			
 			//Gdx.graphics.getDeltaTime();
@@ -89,14 +97,20 @@ public class MainMenuScreen implements Screen {
 				drawTitle = drawTitle + title.charAt(stringIndexTitle);
 				stringIndexTitle++;
 				timer -= letterSpawnTime;        
+				textSound.play();
+			} else if(stringIndexTitle == title.length()) {
+				textSound.stop();
 			}
 			
 			// Render message
 			if (timer >= letterSpawnTime && stringIndexMessage != message.length()) {
 				drawMessage = drawMessage + message.charAt(stringIndexMessage);
 				stringIndexMessage++;
-				timer -= letterSpawnTime;        
-			}	
+				timer -= letterSpawnTime;   
+				textSound.play();
+			} else if (stringIndexMessage == message.length()) {
+				textSound.stop();
+			}
 
 		
 			//Draw menu here
@@ -137,6 +151,8 @@ public class MainMenuScreen implements Screen {
 		mill.dispose();
 		background.dispose();
 		bgm.dispose();
+		textSound.dispose();
+		selectSound.dispose();
 	}
 
 }

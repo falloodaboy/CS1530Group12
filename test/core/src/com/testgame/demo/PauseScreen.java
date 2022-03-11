@@ -4,6 +4,7 @@ import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
@@ -38,18 +39,27 @@ public class PauseScreen implements Screen {
 	private Skin skin;
 	private GameScreen gameScreen;
 	private Window window;
+	private Music pauseSound;
 	
 	public PauseScreen(Game game, OrthographicCamera cam, GameScreen gameScreen) {
 		
 		this.game = game;
 		this.cam = cam;
 		this.gameScreen = gameScreen;
+		try {
+			pauseSound = Gdx.audio.newMusic(Gdx.files.internal("selectSound.mp3"));
+			pauseSound.setVolume(0.4f);
+		} catch(Exception e) {
+			System.out.print(e);
+		}
 		
 	}
 	
 	
 	@Override
 	public void show() {
+		pauseSound.play();
+		
 		skin = new Skin(Gdx.files.internal("craftacular-ui.json"));
 		title = new Label("Paused Game", skin, "title");
 		root = new Table(skin);
@@ -63,7 +73,6 @@ public class PauseScreen implements Screen {
 		resume = new TextButton("Resume", skin);
 		exit = new TextButton("Exit", skin);
 		
-
 		
 		
 		exit.addListener(new InputListener() {
@@ -128,6 +137,7 @@ public class PauseScreen implements Screen {
 				Gdx.input.setInputProcessor(null);
 				game.setScreen(gameScreen);
 				this.dispose();
+				pauseSound.play();
 			}
 	}
 
@@ -157,6 +167,7 @@ public class PauseScreen implements Screen {
 	public void dispose() {
 		stage.dispose();
 		skin.dispose();
+		pauseSound.dispose();
 
 	}
 	
