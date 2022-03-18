@@ -10,6 +10,19 @@ import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Value;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+
+
+
 
 public class MainMenuScreen implements Screen {
 
@@ -31,6 +44,12 @@ public class MainMenuScreen implements Screen {
 	private String drawMessage = "";
 	private int stringIndexTitle = 0;
 	private int stringIndexMessage = 0;
+	private Skin skin;
+	private Stage stage;
+	private TextureRegion regionBackground;
+	private TextButton newGame, loadGame;
+	private Table root;
+	private Texture backgroundTexture;
 	
 	public MainMenuScreen(TerraRogueDemo game) {
 		this.game = game;
@@ -40,7 +59,7 @@ public class MainMenuScreen implements Screen {
 		cam.update();
 		font = new BitmapFont();
 		font.setColor(Color.WHITE);
-		background = new Texture("Background.png");
+		// background = new Texture("Background.png");
 		title = "Welcome to Terra Rogue";
 		message = "Click on the Screen to start the game.";
 		
@@ -70,7 +89,57 @@ public class MainMenuScreen implements Screen {
 	
 	@Override
 	public void show() {
-
+		// Main menu buttons
+		skin = new Skin(Gdx.files.internal("craftacular-ui.json"));
+		root = new Table(skin);
+		// TODO: double check this
+		stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
+		newGame = new TextButton("New Game", skin);
+		backgroundTexture = new Texture("Background.png");
+		backgroundTexture.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
+		regionBackground = new TextureRegion(backgroundTexture);
+		regionBackground.setRegion(0, 0, backgroundTexture.getWidth(), backgroundTexture.getHeight());
+		loadGame = new TextButton("Load Game", skin);
+		
+		
+		newGame.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				boolean answer = true;
+				
+				//insert code
+				game.setScreen(new GameScreen(game));
+				dispose();
+				textSound.dispose();
+				selectSound.play();
+				
+				return answer;
+			}
+		});
+		
+		// TODO: Game load functionality
+		newGame.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				boolean answer = true;
+				//loadGame();
+				
+				return answer;
+			}
+		});
+		
+		
+		
+		Gdx.input.setInputProcessor(stage);
+		root.center();
+		root.setFillParent(true);
+		
+		root.add(newGame);
+		root.row().pad(Value.percentWidth(0.02f),Value.percentWidth(0),Value.percentWidth(0.02f), Value.percentWidth(0));
+		root.add(loadGame);
+		root.row().pad(Value.percentWidth(0.02f),Value.percentWidth(0),Value.percentWidth(0.02f), Value.percentWidth(0));
+		root.setBackground(new TextureRegionDrawable(regionBackground));
+		stage.addActor(root);
 	}
 
 	@Override
@@ -78,47 +147,41 @@ public class MainMenuScreen implements Screen {
 
 		
 		bgm.play();
-		
-			if(Gdx.input.isTouched()) {
-				this.game.setScreen(new GameScreen(this.game));
-				this.dispose();
-				textSound.dispose();
-				selectSound.play();
-			}
+		stage.draw();
+		stage.act(delta);
 			
-			//Gdx.graphics.getDeltaTime();
-			game.batch.begin();
+		game.batch.begin();
 			
-			// Test code
-			timer += delta;
+		timer += delta;
 			
 			// Render title
-			if (timer >= letterSpawnTime && stringIndexTitle != title.length()) {
-				drawTitle = drawTitle + title.charAt(stringIndexTitle);
-				stringIndexTitle++;
-				timer -= letterSpawnTime;        
-				textSound.play();
-			} else if(stringIndexTitle == title.length()) {
+		if (timer >= letterSpawnTime && stringIndexTitle != title.length()) {
+			drawTitle = drawTitle + title.charAt(stringIndexTitle);
+			stringIndexTitle++;
+			timer -= letterSpawnTime;        
+			textSound.play();
+		} else if(stringIndexTitle == title.length()) {
 				textSound.stop();
-			}
+		}
 			
-			// Render message
-			if (timer >= letterSpawnTime && stringIndexMessage != message.length()) {
-				drawMessage = drawMessage + message.charAt(stringIndexMessage);
-				stringIndexMessage++;
-				timer -= letterSpawnTime;   
-				textSound.play();
-			} else if (stringIndexMessage == message.length()) {
-				textSound.stop();
-			}
-
+		// Render message
+		if (timer >= letterSpawnTime && stringIndexMessage != message.length()) {
+			drawMessage = drawMessage + message.charAt(stringIndexMessage);
+			stringIndexMessage++;
+			timer -= letterSpawnTime;   
+			textSound.play();
+		} else if (stringIndexMessage == message.length()) {
+			textSound.stop();
+		}
 		
-			//Draw menu here
-			game.batch.draw(background, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-			mill.draw(game.batch, drawTitle, (cam.viewportWidth)/2 - layout.width/2, cam.viewportHeight - 50);
-			font.draw(game.batch, drawMessage, cam.viewportWidth/2 - layout2.width/2, cam.viewportHeight - layout.height*2 - 50);
-			
-			game.batch.end();
+	
+
+	
+		//Draw menu here
+		mill.draw(game.batch, drawTitle, (cam.viewportWidth)/2 - layout.width/2, cam.viewportHeight - 50);
+		font.draw(game.batch, drawMessage, cam.viewportWidth/2 - layout2.width/2, cam.viewportHeight - layout.height*2 - 50);
+		
+		game.batch.end();
 			
 		
 		
@@ -149,10 +212,11 @@ public class MainMenuScreen implements Screen {
 	public void dispose() {
 		font.dispose();
 		mill.dispose();
-		background.dispose();
 		bgm.dispose();
 		textSound.dispose();
 		selectSound.dispose();
+		skin.dispose();
+		stage.dispose();
 	}
 
 }
