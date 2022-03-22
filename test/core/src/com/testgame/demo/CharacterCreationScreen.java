@@ -23,10 +23,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 
 
 
+public class CharacterCreationScreen implements Screen{
 
-public class MainMenuScreen implements Screen {
-
-	final TerraRogueDemo game;
+    final TerraRogueDemo game;
 	public OrthographicCamera cam;
 	public BitmapFont font;
 	public BitmapFont mill;
@@ -47,11 +46,11 @@ public class MainMenuScreen implements Screen {
 	private Skin skin;
 	private Stage stage;
 	private TextureRegion regionBackground;
-	private TextButton newGame, loadGame;
+	private TextButton newGame;
 	private Table root;
 	private Texture backgroundTexture;
 	
-	public MainMenuScreen(TerraRogueDemo game) {
+	public CharacterCreationScreen(TerraRogueDemo game) {
 		this.game = game;
 		cam = new OrthographicCamera();
 		cam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
@@ -60,8 +59,8 @@ public class MainMenuScreen implements Screen {
 		font = new BitmapFont();
 		font.setColor(Color.WHITE);
 		// background = new Texture("Background.png");
-		title = "Welcome to Terra Rogue";
-		message = "Click on the Screen to start the game.";
+		title = "Character Creation";
+		message = "Select your character and then begin the game!";
 		
 		
 		layout2 = new GlyphLayout(font, message);
@@ -94,22 +93,20 @@ public class MainMenuScreen implements Screen {
 		root = new Table(skin);
 		// TODO: double check this
 		stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
-		newGame = new TextButton("New Game", skin);
+		newGame = new TextButton("Start Game", skin);
 		backgroundTexture = new Texture("Background.png");
 		backgroundTexture.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		regionBackground = new TextureRegion(backgroundTexture);
 		regionBackground.setRegion(0, 0, backgroundTexture.getWidth(), backgroundTexture.getHeight());
-		loadGame = new TextButton("Load Game", skin);
 		
 		
+        /*Button functionality for start game*/
 		newGame.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				boolean answer = true;
-				
-				//insert code
-				//game.setScreen(new GameScreen(game));
-				game.setScreen(new CharacterCreationScreen(game));
+			
+				game.setScreen(new GameScreen(game));
 				dispose();
 				textSound.dispose();
 				selectSound.play();
@@ -117,27 +114,13 @@ public class MainMenuScreen implements Screen {
 				return answer;
 			}
 		});
-		
-		// TODO: Game load functionality
-		newGame.addListener(new InputListener() {
-			@Override
-			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
-				boolean answer = true;
-				//loadGame();
-				
-				return answer;
-			}
-		});
-		
-		
-		
+
 		Gdx.input.setInputProcessor(stage);
 		root.center();
 		root.setFillParent(true);
-		
-		root.add(newGame);
+        
 		root.row().pad(Value.percentWidth(0.02f),Value.percentWidth(0),Value.percentWidth(0.02f), Value.percentWidth(0));
-		root.add(loadGame);
+		root.bottom().add(newGame);
 		root.row().pad(Value.percentWidth(0.02f),Value.percentWidth(0),Value.percentWidth(0.02f), Value.percentWidth(0));
 		root.setBackground(new TextureRegionDrawable(regionBackground));
 		stage.addActor(root);
