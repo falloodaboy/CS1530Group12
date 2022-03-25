@@ -70,6 +70,10 @@ public class GameScreen implements Screen {
 			game.setScreen(new TestScreen(game, cam, this));
 			this.pause();
 		}
+		
+		if(Gdx.input.isKeyJustPressed(Keys.B)) {
+			game.setScreen(new BattleScreen(game, this));
+		}
 	}
 
 
