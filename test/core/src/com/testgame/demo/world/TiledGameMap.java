@@ -92,8 +92,16 @@ public class TiledGameMap extends GameMap {
 		return tileMap.getLayers().getCount();
 	}
 	
+	
+	
+	/**
+	 * to get the center of the square, take the current coordinates, add tilesize/2 to x, add tilesize/2 to y
+	 */
+	
 	public boolean isCollidingWithMap(float x, float y, int layer, int direction) {
 		boolean answer = false;
+		
+		x += Settings.TILE_SIZE/2;
 		
 		collisionLayer = (TiledMapTileLayer) tileMap.getLayers().get(layer);
 		int xval = ( ((int)x + Gdx.graphics.getWidth()/2) / Settings.TILE_SIZE);
