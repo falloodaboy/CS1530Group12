@@ -16,6 +16,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -32,10 +33,18 @@ public class BattleScreen implements Screen {
 	private Skin skin;
 	private Game game;
 	private GameScreen gameScreen;
+	private Music bgm;
 	
 	public BattleScreen(Game game, GameScreen gameScreen) {
 		this.game = game;
 		this.gameScreen = gameScreen;
+		try {
+			bgm = Gdx.audio.newMusic(Gdx.files.internal("aurora.mp3"));
+			bgm.setVolume(0.06f);
+			bgm.setLooping(true);
+		} catch (Exception e) {
+			System.out.println(e);
+		}
 	}
 	
 	
@@ -58,6 +67,7 @@ public class BattleScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		ScreenUtils.clear(0,0,0, 0.1f);
+		bgm.play();
 		
 		stage.act(delta);
 		stage.draw();
@@ -97,6 +107,7 @@ public class BattleScreen implements Screen {
 	public void dispose() {
 		stage.dispose();
 		skin.dispose();
+		bgm.dispose();
 
 	}
 
