@@ -19,7 +19,7 @@ public class GameScreen implements Screen {
 	public TiledGameMap gamemap;
 	public TerraRogueDemo game;
 	public OrthographicCamera cam;
-	public Music bgm;
+	private Music bgm;
 	private BoundingBox box;
 	
 	public GameScreen(TerraRogueDemo game) {
@@ -31,7 +31,7 @@ public class GameScreen implements Screen {
 		cam.update();
 		try {
 			bgm = Gdx.audio.newMusic(Gdx.files.internal("kiliansWake.mp3"));
-			bgm.setVolume(0.2f);
+			bgm.setVolume(0.1f);
 			bgm.setLooping(true);
 		}
 		catch(Exception e) {
@@ -49,8 +49,8 @@ public class GameScreen implements Screen {
 	@Override
 	public void render(float delta) {
 		ScreenUtils.clear(0, 0, 0, 2f, true);
-		
 		bgm.play();
+		
 		
 		//I can use camera position to set bounds on the map scrolling.
 		
@@ -73,6 +73,7 @@ public class GameScreen implements Screen {
 		
 		if(Gdx.input.isKeyJustPressed(Keys.B)) {
 			game.setScreen(new BattleScreen(game, this));
+			bgm.pause();
 		}
 	}
 
@@ -83,12 +84,11 @@ public class GameScreen implements Screen {
 
 	@Override
 	public void resume() {
-			
+		bgm.play();
 	}
 
 	@Override
 	public void hide() {
-		
 	}
 
 	@Override
