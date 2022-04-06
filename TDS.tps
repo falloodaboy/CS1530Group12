@@ -136,7 +136,7 @@
             <key>data</key>
             <struct type="DataFile">
                 <key>name</key>
-                <filename>test/core/assets/TDS.txt</filename>
+                <filename>test/core/assets/TDS.atlas</filename>
             </struct>
         </map>
         <key>multiPack</key>
@@ -473,6 +473,21 @@
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
+            <key type="filename">../gdx-skins/craftacular/raw/cursor.9.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <true/>
+                <key>scale9Borders</key>
+                <rect>0,0,1,1</rect>
+                <key>scale9Paddings</key>
+                <rect>0,0,0,0</rect>
+                <key>scale9FromFile</key>
+                <true/>
+            </struct>
             <key type="filename">../gdx-skins/craftacular/raw/font-bold-export.png</key>
             <struct type="IndividualSpriteSettings">
                 <key>pivotPoint</key>
@@ -515,6 +530,36 @@
                 <rect>162,162,323,323</rect>
                 <key>scale9Paddings</key>
                 <rect>162,162,323,323</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
+            <key type="filename">../gdx-skins/craftacular/raw/text-field.9.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <true/>
+                <key>scale9Borders</key>
+                <rect>3,3,262,49</rect>
+                <key>scale9Paddings</key>
+                <rect>4,4,260,47</rect>
+                <key>scale9FromFile</key>
+                <true/>
+            </struct>
+            <key type="filename">../gdx-skins/craftacular/raw/white.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>0,0,1,1</rect>
+                <key>scale9Paddings</key>
+                <rect>0,0,1,1</rect>
                 <key>scale9FromFile</key>
                 <false/>
             </struct>
@@ -562,6 +607,9 @@
             <filename>../gdx-skins/craftacular/raw/font-bold-export.png</filename>
             <filename>../gdx-skins/craftacular/raw/window.9.png</filename>
             <filename>test/core/assets/potion.jpg</filename>
+            <filename>../gdx-skins/craftacular/raw/text-field.9.png</filename>
+            <filename>../gdx-skins/craftacular/raw/cursor.9.png</filename>
+            <filename>../gdx-skins/craftacular/raw/white.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>

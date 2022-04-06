@@ -10,6 +10,7 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 		file: font-title-export.fnt
 	}
 }
+
 com.badlogic.gdx.graphics.Color: {
 	gray: {
 		r: 0.55
@@ -30,6 +31,20 @@ com.badlogic.gdx.graphics.Color: {
 		a: 1
 	}
 }
+
+com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+	gray: {
+		name: white
+		color: {
+			r: 0.73666674
+			g: 0.73666674
+			b: 0.73666674
+			a: 1
+		}
+	}
+}
+
+
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	default: {
 		up: Button BG shadow
@@ -139,4 +154,14 @@ com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 		titleFont: font
 	}
 }
+com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+	default: {
+		font: font
+		fontColor: white
+		background: text-field
+		cursor: cursor
+		selection: gray
+	}
+}
+
 }

@@ -20,7 +20,6 @@ public class GameScreen implements Screen {
 	public TerraRogueDemo game;
 	public OrthographicCamera cam;
 	private Music bgm;
-	private BoundingBox box;
 	
 	public GameScreen(TerraRogueDemo game) {
 		this.game = game;

@@ -7,29 +7,50 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
-/**
- *  BattleScreen class for when the player engages the enemy.
- *  The battle screen depends on the player state data and enemy state data as input
- *  It will simulate the battle and update the player and enemy state data accordingly
- */
 
 
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+
+
+
+/**
+ *  BattleScreen class for when the player engages the enemy.
+ *  The battle screen depends on the player state data and enemy state data as input
+ *  It will simulate the battle and update the player and enemy state data accordingly
+ *  
+ *  Tasks Left To Do:
+ *  1. Properly position all of the elements on the BattleScreen based on the design layout
+ *  2. Setup list UI for the options for the player.
+ *  3. Test separate skin for options and combine it into the TDS atlas afterwards
+ *  4. Setup Turn-based RPG logic
+ *  5. Get/Set the player and enemy states
+ *  6. Add enemy attack logic
+ */
 public class BattleScreen implements Screen {
 	
 	private Stage stage;
 	private Table root;
-	private Label intro;
+	private TextField topBox;
+	private Table optionsBox;
+	private List options;
+	private Image playerSprite;
+	private Image enemySprite;
+	
+	
+	
 	private Skin skin;
 	private Game game;
 	private GameScreen gameScreen;
@@ -53,14 +74,20 @@ public class BattleScreen implements Screen {
 		skin = new Skin(Gdx.files.internal("TDS.json"));
 		stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		root = new Table();
-		root.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("city_back.png")))));
-		intro = new Label("This is the battle screen", skin);
+		topBox = new TextField("Announcement", skin);
+		optionsBox = new Table();
+		//options = new List(skin);
+		topBox.setTouchable(null);
+		playerSprite = new Image(new Texture(Gdx.files.internal("dirt.png")));
+		enemySprite = new Image(new Texture(Gdx.files.internal("dirt.png")));
+		topBox.setAlignment(1);
+		root.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("old_castle_bg.jpg")))));
 		root.setFillParent(true);
 		root.top();
 		Gdx.input.setInputProcessor(stage);
+	
 		
-		
-		root.add(intro);
+		root.add(topBox).prefWidth(500);
 		stage.addActor(root);
 	}
 
@@ -111,4 +138,14 @@ public class BattleScreen implements Screen {
 
 	}
 
+	private class Option {
+		
+		String name;
+		String description;
+		
+		public Option(String name, String desc) {
+			this.name = name;
+			this.description = desc;
+		}
+	}
 }
