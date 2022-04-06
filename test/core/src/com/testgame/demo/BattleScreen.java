@@ -13,12 +13,14 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -44,7 +46,7 @@ public class BattleScreen implements Screen {
 	private Stage stage;
 	private Table root;
 	private TextField topBox;
-	private Table optionsBox;
+	private Table optionsBox, sceneBox;
 	private List options;
 	private Image playerSprite;
 	private Image enemySprite;
@@ -74,20 +76,33 @@ public class BattleScreen implements Screen {
 		skin = new Skin(Gdx.files.internal("TDS.json"));
 		stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		root = new Table();
-		topBox = new TextField("Announcement", skin);
+		topBox = new TextField("Battle Start", skin);
 		optionsBox = new Table();
+		sceneBox = new Table();
 		//options = new List(skin);
-		topBox.setTouchable(null);
 		playerSprite = new Image(new Texture(Gdx.files.internal("dirt.png")));
 		enemySprite = new Image(new Texture(Gdx.files.internal("dirt.png")));
+		topBox.setTouchable(null);
 		topBox.setAlignment(1);
+		optionsBox.setBackground(new TextureRegionDrawable(new Texture(Gdx.files.internal("battleoptionsbg.png"))));
 		root.setBackground(new TextureRegionDrawable(new TextureRegion(new Texture(Gdx.files.internal("old_castle_bg.jpg")))));
 		root.setFillParent(true);
-		root.top();
+		
 		Gdx.input.setInputProcessor(stage);
 	
 		
-		root.add(topBox).prefWidth(500);
+		root.top();
+		root.add(topBox).prefWidth(Value.percentWidth(0.7f, root));
+		root.row();
+		sceneBox.add(playerSprite);
+		sceneBox.add(enemySprite);
+		root.add(sceneBox).expandY();
+		root.row();
+		Cell<Table> optionsCell = root.add(optionsBox);
+		optionsCell.maxHeight(Value.percentHeight(0.3f, root));
+		optionsCell.minHeight(Value.percentHeight(0.1f, root));
+		optionsCell.prefWidth(Value.percentWidth(1f, root));
+		
 		stage.addActor(root);
 	}
 
