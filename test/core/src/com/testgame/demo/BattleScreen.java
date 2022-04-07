@@ -87,7 +87,7 @@ public class BattleScreen implements Screen {
 		optionsBox = new Table();
 		sceneBox = new Table();
 		//options = new List(skin);
-		playerSprite = new Image(new Texture(Gdx.files.internal("dirt.png")));
+		playerSprite = new Image(new Texture(Gdx.files.internal("nate_back.png")));
 		enemySprite = new Image(new Texture(Gdx.files.internal("dirt.png")));
 		topBox.setTouchable(null);
 		topBox.setAlignment(1);
@@ -101,9 +101,9 @@ public class BattleScreen implements Screen {
 		root.top();
 		root.add(topBox).prefWidth(Value.percentWidth(0.7f, root));
 		root.row();
-		sceneBox.add(playerSprite);
-		sceneBox.add(enemySprite);
-		root.add(sceneBox).expandY();
+		Cell<Table> sceneCell = root.add(sceneBox).expand().bottom();
+		sceneBox.add(playerSprite).padRight(Value.percentWidth(0.5f, root));
+		sceneBox.add(enemySprite).padLeft(Value.percentWidth(-0.6f, root));
 		root.row();
 		Cell<Table> optionsCell = root.add(optionsBox);
 		optionsCell.maxHeight(Value.percentHeight(0.3f, root));
@@ -133,6 +133,7 @@ public class BattleScreen implements Screen {
 		}
 		
 		this.executeTurn(delta);
+		
 	}
 
 	@Override
