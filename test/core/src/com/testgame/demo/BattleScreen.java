@@ -42,7 +42,14 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
  *  6. Add enemy attack logic
  */
 public class BattleScreen implements Screen {
+	//class elements
+	private Option curOption; //the current option that the player has selected
+	private boolean turnLock = true;
+	float time = 0;
+	float actionDelay = 2;
 	
+	
+	//UI elements
 	private Stage stage;
 	private Table root;
 	private TextField topBox;
@@ -52,7 +59,7 @@ public class BattleScreen implements Screen {
 	private Image enemySprite;
 	
 	
-	
+	//Miscellaneous elements
 	private Skin skin;
 	private Game game;
 	private GameScreen gameScreen;
@@ -89,7 +96,7 @@ public class BattleScreen implements Screen {
 		root.setFillParent(true);
 		
 		Gdx.input.setInputProcessor(stage);
-	
+		
 		
 		root.top();
 		root.add(topBox).prefWidth(Value.percentWidth(0.7f, root));
@@ -120,6 +127,12 @@ public class BattleScreen implements Screen {
 			this.dispose();
 		}
 		
+		
+		if(Gdx.input.isKeyJustPressed(Keys.SPACE) && turnLock == true) {
+			turnLock = false;
+		}
+		
+		this.executeTurn(delta);
 	}
 
 	@Override
@@ -162,5 +175,25 @@ public class BattleScreen implements Screen {
 			this.name = name;
 			this.description = desc;
 		}
+	}
+	
+	/**
+	 * Executes the current RPG turn where the player does an action and then the enemy does an action
+	 */
+	private void executeTurn(float delta) {
+		if(turnLock == false) {
+			
+			time += delta;
+			
+			if(time > actionDelay) {
+				time -= actionDelay;
+				turnLock = true;
+				optionsBox.setVisible(true);
+			}
+			else {
+				optionsBox.setVisible(false);
+			}
+		}
+		
 	}
 }
