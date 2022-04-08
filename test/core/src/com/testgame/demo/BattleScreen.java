@@ -47,7 +47,7 @@ public class BattleScreen implements Screen {
 	private boolean turnLock = true;
 	float time = 0;
 	float actionDelay = 2;
-	
+	private String[] tst;
 	
 	//UI elements
 	private Stage stage;
@@ -57,6 +57,8 @@ public class BattleScreen implements Screen {
 	private List options;
 	private Image playerSprite;
 	private Image enemySprite;
+	private Label optionsGreeter;
+	
 	
 	
 	//Miscellaneous elements
@@ -75,6 +77,10 @@ public class BattleScreen implements Screen {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+		
+		tst = new String[2];
+		tst[0] = "Milk";
+		tst[1] = "Eggs";
 	}
 	
 	
@@ -86,7 +92,9 @@ public class BattleScreen implements Screen {
 		topBox = new TextField("Battle Start", skin);
 		optionsBox = new Table();
 		sceneBox = new Table();
-		//options = new List(skin);
+		options = new List(skin);
+		optionsGreeter = new Label("Select an Option Below: ", skin, "holo-light");
+		options.setItems(tst);
 		playerSprite = new Image(new Texture(Gdx.files.internal("nate_back.png")));
 		enemySprite = new Image(new Texture(Gdx.files.internal("dirt.png")));
 		topBox.setTouchable(null);
@@ -102,10 +110,15 @@ public class BattleScreen implements Screen {
 		root.add(topBox).prefWidth(Value.percentWidth(0.7f, root));
 		root.row();
 		Cell<Table> sceneCell = root.add(sceneBox).expand().bottom();
-		sceneBox.add(playerSprite).padRight(Value.percentWidth(0.5f, root));
+		Cell<Image> playerCell = sceneBox.add(playerSprite);
+		playerCell.padRight(Value.percentWidth(0.5f, root));
 		sceneBox.add(enemySprite).padLeft(Value.percentWidth(-0.6f, root));
 		root.row();
 		Cell<Table> optionsCell = root.add(optionsBox);
+		optionsBox.left().top();
+		optionsBox.add(optionsGreeter).padLeft(40);
+		optionsBox.row();
+		optionsBox.add(options).padLeft(-115);
 		optionsCell.maxHeight(Value.percentHeight(0.3f, root));
 		optionsCell.minHeight(Value.percentHeight(0.1f, root));
 		optionsCell.prefWidth(Value.percentWidth(1f, root));

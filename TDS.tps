@@ -578,6 +578,37 @@
                 <key>scale9FromFile</key>
                 <true/>
             </struct>
+            <key type="filename">../gdx-skins/holo/raw/light-mdpi/text_selected.9.png</key>
+            <key type="filename">../gdx-skins/holo/raw/light-mdpi/text_selected_opaque.9.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <true/>
+                <key>scale9Borders</key>
+                <rect>12,16,2,2</rect>
+                <key>scale9Paddings</key>
+                <rect>12,8,2,16</rect>
+                <key>scale9FromFile</key>
+                <true/>
+            </struct>
+            <key type="filename">../gdx-skins/holo/raw/light-mdpi/text_selected.png</key>
+            <struct type="IndividualSpriteSettings">
+                <key>pivotPoint</key>
+                <point_f>0.5,0.5</point_f>
+                <key>spriteScale</key>
+                <double>1</double>
+                <key>scale9Enabled</key>
+                <false/>
+                <key>scale9Borders</key>
+                <rect>7,8,13,17</rect>
+                <key>scale9Paddings</key>
+                <rect>7,8,13,17</rect>
+                <key>scale9FromFile</key>
+                <false/>
+            </struct>
         </map>
         <key>fileList</key>
         <array>
@@ -610,6 +641,9 @@
             <filename>../gdx-skins/craftacular/raw/text-field.9.png</filename>
             <filename>../gdx-skins/craftacular/raw/cursor.9.png</filename>
             <filename>../gdx-skins/craftacular/raw/white.png</filename>
+            <filename>../gdx-skins/holo/raw/light-mdpi/text_selected.png</filename>
+            <filename>../gdx-skins/holo/raw/light-mdpi/text_selected_opaque.9.png</filename>
+            <filename>../gdx-skins/holo/raw/light-mdpi/text_selected.9.png</filename>
         </array>
         <key>ignoreFileList</key>
         <array/>
