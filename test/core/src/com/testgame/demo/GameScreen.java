@@ -10,7 +10,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.math.collision.BoundingBox;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.testgame.demo.world.TiledGameMap;
 
 public class GameScreen implements Screen {
@@ -21,6 +24,7 @@ public class GameScreen implements Screen {
 	public OrthographicCamera cam;
 	private Music bgm;
 	private BoundingBox box;
+
 	
 	public GameScreen(TerraRogueDemo game) {
 		this.game = game;
@@ -43,7 +47,7 @@ public class GameScreen implements Screen {
 	
 	@Override
 	public void show() {
-
+		
 	}
 
 	@Override

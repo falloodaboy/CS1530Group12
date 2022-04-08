@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -74,7 +75,6 @@ public class CharacterCreationScreen implements Screen{
 			bgm = Gdx.audio.newMusic(Gdx.files.internal("deathnote.mp3"));
 			bgm.setVolume(0.1f);
 			bgm.setLooping(true);
-//			bgm.setPosition(bgmPosition);
 			
 			textSound = Gdx.audio.newMusic(Gdx.files.internal("textSound.wav"));
 			textSound.setVolume(0.8f);
@@ -92,11 +92,11 @@ public class CharacterCreationScreen implements Screen{
 	@Override
 	public void show() {
 		// Main menu buttons
+
 		bgm.play();
 		bgm.setPosition(this.bgmPosition);
 		skin = new Skin(Gdx.files.internal("craftacular-ui.json"));
 		root = new Table(skin);
-		// TODO: double check this
 		stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		newGame = new TextButton("Start Game", skin);
 		backgroundTexture = new Texture("Background.png");
@@ -110,7 +110,7 @@ public class CharacterCreationScreen implements Screen{
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				boolean answer = true;
-			
+
 				game.setScreen(new GameScreen(game));
 				dispose();
 				textSound.dispose();
@@ -129,45 +129,45 @@ public class CharacterCreationScreen implements Screen{
 		root.row().pad(Value.percentWidth(0.02f),Value.percentWidth(0),Value.percentWidth(0.02f), Value.percentWidth(0));
 		root.setBackground(new TextureRegionDrawable(regionBackground));
 		stage.addActor(root);
+		stage.getRoot().getColor().a = 0;
+		stage.getRoot().addAction(Actions.fadeIn(0.5f));
+
 	}
 
 	@Override
 	public void render(float delta) {
 		stage.draw();
 		stage.act(delta);
-			
+		
 		game.batch.begin();
-			
+		
 		timer += delta;
-			
-		// Render title
-		if (timer >= letterSpawnTime && stringIndexTitle != title.length()) {
-			drawTitle = drawTitle + title.charAt(stringIndexTitle);
-			stringIndexTitle++;
-			timer -= letterSpawnTime;        
-			textSound.play();
-		} else if(stringIndexTitle == title.length()) {
-				textSound.stop();
-		}
-			
-		// Render message
-		if (timer >= letterSpawnTime && stringIndexMessage != message.length()) {
-			drawMessage = drawMessage + message.charAt(stringIndexMessage);
-			stringIndexMessage++;
-			timer -= letterSpawnTime;   
-			textSound.play();
-		} else if (stringIndexMessage == message.length()) {
-			textSound.stop();
-		}
+		
+		mill.draw(game.batch, title, (cam.viewportWidth)/2 - layout.width/2, cam.viewportHeight - 50);
+		font.draw(game.batch, message, cam.viewportWidth/2 - layout2.width/2, cam.viewportHeight - layout.height*2 - 50);
+		game.batch.end();
+		
+//		if (timer >= letterSpawnTime && stringIndexTitle != title.length()) {
+//			drawTitle = drawTitle + title.charAt(stringIndexTitle);
+//			stringIndexTitle++;
+//			timer -= letterSpawnTime;        
+//			textSound.play();
+//		} else if(stringIndexTitle == title.length()) {
+//				textSound.stop();
+//		}
+//			
+//		if (timer >= letterSpawnTime && stringIndexMessage != message.length()) {
+//			drawMessage = drawMessage + message.charAt(stringIndexMessage);
+//			stringIndexMessage++;
+//			timer -= letterSpawnTime;   
+//			textSound.play();
+//		} else if (stringIndexMessage == message.length()) {
+//			textSound.stop();
+//		}
 	
 	
 
 	
-		//Draw menu here
-		mill.draw(game.batch, drawTitle, (cam.viewportWidth)/2 - layout.width/2, cam.viewportHeight - 50);
-		font.draw(game.batch, drawMessage, cam.viewportWidth/2 - layout2.width/2, cam.viewportHeight - layout.height*2 - 50);
-		
-		game.batch.end();
 			
 		
 		
@@ -196,13 +196,14 @@ public class CharacterCreationScreen implements Screen{
 
 	@Override
 	public void dispose() {
+		stage.clear();
+		stage.dispose();
 		font.dispose();
 		mill.dispose();
 		bgm.dispose();
 		textSound.dispose();
 		selectSound.dispose();
 		skin.dispose();
-		stage.dispose();
 	}
 
 }

@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
@@ -92,7 +93,6 @@ public class MainMenuScreen implements Screen {
 		// Main menu buttons
 		skin = new Skin(Gdx.files.internal("craftacular-ui.json"));
 		root = new Table(skin);
-		// TODO: double check this
 		stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		newGame = new TextButton("New Game", skin);
 		backgroundTexture = new Texture("Background.png");
@@ -106,9 +106,6 @@ public class MainMenuScreen implements Screen {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				boolean answer = true;
-				
-				//insert code
-				//game.setScreen(new GameScreen(game));
 				game.setScreen(new CharacterCreationScreen(game, bgm.getPosition()));
 				dispose();
 				textSound.dispose();
@@ -146,15 +143,14 @@ public class MainMenuScreen implements Screen {
 	@Override
 	public void render(float delta) {
 
-		
 		bgm.play();
 		stage.draw();
 		stage.act(delta);
-			
+		
 		game.batch.begin();
-			
+		
 		timer += delta;
-			
+		
 		// Render title
 		if (timer >= letterSpawnTime && stringIndexTitle != title.length()) {
 			drawTitle = drawTitle + title.charAt(stringIndexTitle);
@@ -162,9 +158,9 @@ public class MainMenuScreen implements Screen {
 			timer -= letterSpawnTime;        
 			textSound.play();
 		} else if(stringIndexTitle == title.length()) {
-				textSound.stop();
+			textSound.stop();
 		}
-			
+		
 		// Render message
 		if (timer >= letterSpawnTime && stringIndexMessage != message.length()) {
 			drawMessage = drawMessage + message.charAt(stringIndexMessage);
@@ -175,14 +171,16 @@ public class MainMenuScreen implements Screen {
 			textSound.stop();
 		}
 		
-	
-
-	
+		
+		
+		
 		//Draw menu here
 		mill.draw(game.batch, drawTitle, (cam.viewportWidth)/2 - layout.width/2, cam.viewportHeight - 50);
 		font.draw(game.batch, drawMessage, cam.viewportWidth/2 - layout2.width/2, cam.viewportHeight - layout.height*2 - 50);
 		
 		game.batch.end();
+
+
 			
 		
 		
@@ -211,13 +209,14 @@ public class MainMenuScreen implements Screen {
 
 	@Override
 	public void dispose() {
+		stage.clear();
+		stage.dispose();
 		font.dispose();
 		mill.dispose();
 		bgm.dispose();
 		textSound.dispose();
 		selectSound.dispose();
 		skin.dispose();
-		stage.dispose();
 	}
 
 }
