@@ -47,7 +47,7 @@ public class BattleScreen implements Screen {
 	private boolean turnLock = true;
 	float time = 0;
 	float actionDelay = 2;
-	private String[] tst;
+	private Option[] choices;
 	
 	//UI elements
 	private Stage stage;
@@ -78,9 +78,7 @@ public class BattleScreen implements Screen {
 			System.out.println(e);
 		}
 		
-		tst = new String[2];
-		tst[0] = "Milk";
-		tst[1] = "Eggs";
+		this.createOptions();
 	}
 	
 	
@@ -94,9 +92,12 @@ public class BattleScreen implements Screen {
 		sceneBox = new Table();
 		options = new List(skin);
 		optionsGreeter = new Label("Select an Option Below: ", skin, "holo-light");
-		options.setItems(tst);
+		
+		
+		
+		options.setItems(this.getArrayChoices());
 		playerSprite = new Image(new Texture(Gdx.files.internal("nate_back.png")));
-		enemySprite = new Image(new Texture(Gdx.files.internal("dirt.png")));
+		enemySprite = new Image(new Texture(Gdx.files.internal("test_monster.png")));
 		topBox.setTouchable(null);
 		topBox.setAlignment(1);
 		optionsBox.setBackground(new TextureRegionDrawable(new Texture(Gdx.files.internal("battleoptionsbg.png"))));
@@ -118,7 +119,7 @@ public class BattleScreen implements Screen {
 		optionsBox.left().top();
 		optionsBox.add(optionsGreeter).padLeft(40);
 		optionsBox.row();
-		optionsBox.add(options).padLeft(-115);
+		optionsBox.add(options).padLeft(0);
 		optionsCell.maxHeight(Value.percentHeight(0.3f, root));
 		optionsCell.minHeight(Value.percentHeight(0.1f, root));
 		optionsCell.prefWidth(Value.percentWidth(1f, root));
@@ -152,6 +153,7 @@ public class BattleScreen implements Screen {
 	@Override
 	public void resize(int width, int height) {
 		this.stage.getViewport().update(width, height);
+		this.stage.getViewport().apply();
 	}
 
 	@Override
@@ -180,15 +182,22 @@ public class BattleScreen implements Screen {
 
 	}
 
+	//To be used with the Options. RNG damage model for each option
 	private class Option {
 		
 		String name;
 		String description;
+		float damage;
 		
 		public Option(String name, String desc) {
 			this.name = name;
 			this.description = desc;
 		}
+		
+		public String getName() {
+			return name;
+		}
+		
 	}
 	
 	/**
@@ -202,12 +211,32 @@ public class BattleScreen implements Screen {
 			if(time > actionDelay) {
 				time -= actionDelay;
 				turnLock = true;
+				topBox.setText("Battle Start");
 				optionsBox.setVisible(true);
 			}
 			else {
+				topBox.setText("Announcement");
 				optionsBox.setVisible(false);
 			}
 		}
+		
+	}
+	
+	private String[] getArrayChoices() {
+		String[] cho = new String[choices.length];
+		for(int i=0; i < choices.length; i++) {
+			cho[i] = choices[i].getName();
+		}
+		
+		return cho;
+	}
+	
+	private void createOptions() {
+		choices = new Option[3];
+		
+		choices[0] = new Option("Fireball          30MP", "Throws a fireball at the enemy");
+		choices[1] = new Option("Heal               12MP", "Recovers your health by 10 points");
+		choices[2] = new Option("Charm            50MP", "50% chance that the enemy does nothing");
 		
 	}
 }
