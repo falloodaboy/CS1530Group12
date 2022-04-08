@@ -109,7 +109,7 @@ public class MainMenuScreen implements Screen {
 				
 				//insert code
 				//game.setScreen(new GameScreen(game));
-				game.setScreen(new CharacterCreationScreen(game));
+				game.setScreen(new CharacterCreationScreen(game, bgm.getPosition()));
 				dispose();
 				textSound.dispose();
 				selectSound.play();
@@ -155,7 +155,7 @@ public class MainMenuScreen implements Screen {
 			
 		timer += delta;
 			
-			// Render title
+		// Render title
 		if (timer >= letterSpawnTime && stringIndexTitle != title.length()) {
 			drawTitle = drawTitle + title.charAt(stringIndexTitle);
 			stringIndexTitle++;

@@ -49,9 +49,11 @@ public class CharacterCreationScreen implements Screen{
 	private TextButton newGame;
 	private Table root;
 	private Texture backgroundTexture;
+	private float bgmPosition;
 	
-	public CharacterCreationScreen(TerraRogueDemo game) {
+	public CharacterCreationScreen(TerraRogueDemo game, float bgmPosition) {
 		this.game = game;
+		this.bgmPosition = bgmPosition;
 		cam = new OrthographicCamera();
 		cam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		game.batch.setProjectionMatrix(cam.combined);
@@ -72,6 +74,7 @@ public class CharacterCreationScreen implements Screen{
 			bgm = Gdx.audio.newMusic(Gdx.files.internal("deathnote.mp3"));
 			bgm.setVolume(0.1f);
 			bgm.setLooping(true);
+//			bgm.setPosition(bgmPosition);
 			
 			textSound = Gdx.audio.newMusic(Gdx.files.internal("textSound.wav"));
 			textSound.setVolume(0.8f);
@@ -89,6 +92,8 @@ public class CharacterCreationScreen implements Screen{
 	@Override
 	public void show() {
 		// Main menu buttons
+		bgm.play();
+		bgm.setPosition(this.bgmPosition);
 		skin = new Skin(Gdx.files.internal("craftacular-ui.json"));
 		root = new Table(skin);
 		// TODO: double check this
@@ -128,9 +133,6 @@ public class CharacterCreationScreen implements Screen{
 
 	@Override
 	public void render(float delta) {
-
-		
-		bgm.play();
 		stage.draw();
 		stage.act(delta);
 			
@@ -138,7 +140,7 @@ public class CharacterCreationScreen implements Screen{
 			
 		timer += delta;
 			
-			// Render title
+		// Render title
 		if (timer >= letterSpawnTime && stringIndexTitle != title.length()) {
 			drawTitle = drawTitle + title.charAt(stringIndexTitle);
 			stringIndexTitle++;
@@ -157,7 +159,7 @@ public class CharacterCreationScreen implements Screen{
 		} else if (stringIndexMessage == message.length()) {
 			textSound.stop();
 		}
-		
+	
 	
 
 	
