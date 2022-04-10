@@ -106,7 +106,7 @@ public class BattleScreen implements Screen {
 		Cell<Table> sceneCell = root.add(sceneBox).expand().bottom();
 		Cell<Image> playerCell = sceneBox.add(playerSprite);
 		playerCell.padRight(Value.percentWidth(0.5f, root));
-		sceneBox.add(enemySprite).padLeft(Value.percentWidth(-0.6f, root));
+		sceneBox.add(enemySprite).padLeft(Value.percentWidth(-0.6f, root)).padTop(Value.percentHeight(0.1f, root));
 		root.row();
 		Cell<Table> optionsCell = root.add(optionsBox);
 		optionsBox.left().top();
@@ -137,7 +137,7 @@ public class BattleScreen implements Screen {
 		
 		if(Gdx.input.isKeyJustPressed(Keys.SPACE) && turnLock == true) {
 			turnLock = false;
-			sceneBox.getChild(1).addAction(new DamageAction(3f, 0.1f));;
+			sceneBox.getChild(1).addAction(new DamageAction(0.2f, 0.7f, 5f));
 			
 		}
 		
