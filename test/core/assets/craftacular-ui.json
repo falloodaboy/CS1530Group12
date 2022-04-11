@@ -157,4 +157,15 @@ com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 		titleFont: font
 	}
 }
+
+com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+	default: {
+		font: font
+		fontColor: white
+		background: text-field
+		cursor: cursor
+		selection: gray
+	}
+}
+
 }

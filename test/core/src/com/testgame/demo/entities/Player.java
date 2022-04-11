@@ -22,7 +22,6 @@ public class Player extends Entity {
 	
 	public Player(float x, float y, TiledGameMap map) {
 		super(x, y, EntitiesType.PLAYER, map);
-		image = new Texture(Gdx.files.internal("player.png"));
 		spritesheet = new Texture(Gdx.files.internal("player2.png"));
 		panim = new PlayerAnimation(spritesheet, 64, 64);
 		score = 0;
@@ -34,13 +33,10 @@ public class Player extends Entity {
 		Vector3 playercoords = cam.project(new Vector3(this.getX(), this.getY(), 0));
 		
 		panim.render(batch, playercoords.x, playercoords.y);
-		//batch.draw(image, playercoords.x, playercoords.y, Settings.TILE_SIZE, Settings.TILE_SIZE);
 		this.update(cam, Gdx.graphics.getDeltaTime());
-		//cam.zoom = Settings.SCALE/2;
 		Vector3 position = cam.position;
 		position.x = getX() + (map.getPixelWidth()/2);
 		position.y = getY() + (map.getPixelHeight()/2);
-		//cam.position.lerp(position, 0.3f);
 		cam.position.set(position);
 		cam.update();
 

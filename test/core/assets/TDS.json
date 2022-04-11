@@ -9,7 +9,10 @@ com.badlogic.gdx.graphics.g2d.BitmapFont: {
 	title: {
 		file: font-title-export.fnt
 	}
+	default-font: {file: Roboto-mdpi.fnt }, 
+	thin-font: {file: Roboto-Thin-mdpi.fnt} 
 }
+
 com.badlogic.gdx.graphics.Color: {
 	gray: {
 		r: 0.55
@@ -29,7 +32,30 @@ com.badlogic.gdx.graphics.Color: {
 		b: 1
 		a: 1
 	}
+	text-dark: { a: 1, b: 0, g: 0, r: 0 },
+	text-light: { a: 1, b: 1, g: 1, r: 1 },
+	text-light-dark: { a: 1, b: 0, g: 0, r: 0 }
 }
+
+com.badlogic.gdx.scenes.scene2d.ui.Skin$TintedDrawable: {
+	gray: {
+		name: white
+		color: {
+			r: 0.73666674
+			g: 0.73666674
+			b: 0.73666674
+			a: 1
+		}
+	}
+}
+
+com.badlogic.gdx.scenes.scene2d.ui.List$ListStyle: {
+		default: { fontColorUnselected: text-light, selection: text_selected, fontColorSelected: text-light, font: default-font },
+		opaque: { fontColorUnselected: text-light, selection: text_selected_opaque, fontColorSelected: text-light, font: default-font },
+		default-thin: { fontColorUnselected: text-light, selection: text_selected, fontColorSelected: text-light, font: thin-font },
+		opaque-thin: { fontColorUnselected: text-light, selection: text_selected_opaque, fontColorSelected: text-light, font: thin-font }
+	}
+
 com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	default: {
 		up: Button BG shadow
@@ -112,6 +138,10 @@ com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
 		font: bold
 		fontColor: green
 	}
+	holo-light: {
+		font: default-font
+		fontColor: text-light
+	}
 }
 
 com.badlogic.gdx.scenes.scene2d.ui.TextButton$TextButtonStyle: {
@@ -139,4 +169,14 @@ com.badlogic.gdx.scenes.scene2d.ui.Window$WindowStyle: {
 		titleFont: font
 	}
 }
+com.badlogic.gdx.scenes.scene2d.ui.TextField$TextFieldStyle: {
+	default: {
+		font: font
+		fontColor: white
+		background: text-field
+		cursor: cursor
+		selection: gray
+	}
+}
+
 }
