@@ -2,30 +2,30 @@ package com.testgame.demo.entities;
 
 
 
+import java.util.ArrayList;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
-import com.testgame.demo.world.GameMap;
-import com.testgame.demo.world.Settings;
 import com.testgame.demo.world.TiledGameMap;
 
 public class Player extends Entity {
 
-	private Texture image;
+	
+	
 	private Texture spritesheet;
 	private PlayerAnimation panim;
 	private int lastPressed = -1;
-	private double score;
+	private double score = 0;
+	private ArrayList<Item> items;
 	
 	public Player(float x, float y, TiledGameMap map) {
 		super(x, y, EntitiesType.PLAYER, map);
 		spritesheet = new Texture(Gdx.files.internal("player2.png"));
 		panim = new PlayerAnimation(spritesheet, 64, 64);
-		score = 0;
-		
+		items = new ArrayList<>();
 	}
 
 	@Override
@@ -46,7 +46,6 @@ public class Player extends Entity {
 	
 	@Override
 	public void dispose() {
-		image.dispose();
 		panim.dispose();
 	}
 
@@ -117,23 +116,3 @@ public class Player extends Entity {
 
 }
 
-
-
-//System.out.println(cam.viewportWidth + " " + cam.viewportHeight);
-//System.out.println(map.getPixelWidth() + " " + map.getHeight());
-
-//System.out.println(map.getPixelWidth());
-//System.out.println(worldScreenRatio);
-
-
-//System.out.println("CameraX: " + cam.position.x + " CameraY: " + cam.position.y);
-//System.out.println("PlayerX: " + getX() + " PlayerY: " + getY());
-
-
-
-//Vector3 position = cam.position;
-//Vector2 target = new Vector2(getX(), getY());
-//
-//position.x = cam.position.x + (target.x - cam.position.x) * 0.1f;
-//position.y = cam.position.y + (target.y - cam.position.y) * 0.1f;
-//cam.position.set(position);

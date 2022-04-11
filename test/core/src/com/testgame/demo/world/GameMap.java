@@ -11,7 +11,6 @@ public abstract class GameMap {
 
 	public abstract void render(OrthographicCamera camera, SpriteBatch batch);
 	public abstract void update(OrthographicCamera camera, float deltaTime);
-	public List<Entity> entities;
 	
 	
 	public TileType getTileTypeByLocation(int layer, float x, float y) {
