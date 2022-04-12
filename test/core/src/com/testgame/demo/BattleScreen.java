@@ -38,6 +38,7 @@ import com.testgame.demo.entities.*;
 public class BattleScreen implements Screen {
 	//class elements
 	private boolean turnLock = true;
+	private boolean monsterTurn = false;
 	float time = 0;
 	float actionDelay = 2;
 	private Option[] choices;
@@ -134,14 +135,18 @@ public class BattleScreen implements Screen {
 			this.dispose();
 		}
 		
-		
-		if(Gdx.input.isKeyJustPressed(Keys.SPACE) && turnLock == true) {
+//		System.out.println("turnLock: " + turnLock + "monsterTurn: " + monsterTurn);
+		if(Gdx.input.isKeyJustPressed(Keys.SPACE) && turnLock == true && monsterTurn == false) {
 			turnLock = false;
-			sceneBox.getChild(1).addAction(new DamageAction(0.2f, 0.7f, 5f));
-			
+			monsterTurn = true;
+			sceneBox.getChild(1).addAction(new DamageAction(0.2f, 0.7f, 5f));			
+		} else if (turnLock == true && monsterTurn == true) {
+			turnLock = false;
+			monsterTurn = false;
+			sceneBox.getChild(0).addAction(new DamageAction(0.2f, 0.7f, 5f));
 		}
-		
 		this.executeTurn(delta);
+		
 		
 	}
 
@@ -200,21 +205,22 @@ public class BattleScreen implements Screen {
 	 */
 	private void executeTurn(float delta) {
 		if(turnLock == false) {
-			
 			time += delta;
 			
 			if(time > actionDelay) {
 				time -= actionDelay;
 				turnLock = true;
-				topBox.setText("Battle Start");
-				optionsBox.setVisible(true);
+//				optionsBox.setVisible(true);
 			}
 			else {
-				topBox.setText("Announcement");
+				topBox.setText("Monster's move!");
 				optionsBox.setVisible(false);
 			}
 		}
-		
+		if(monsterTurn == false) {
+			topBox.setText("Your move!");
+			optionsBox.setVisible(true);
+		}
 	}
 	
 	private String[] getArrayChoices() {
