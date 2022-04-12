@@ -26,6 +26,7 @@ public class Player extends Entity {
 		spritesheet = new Texture(Gdx.files.internal("player2.png"));
 		panim = new PlayerAnimation(spritesheet, 64, 64);
 		items = new ArrayList<>();
+		health = 100;
 	}
 
 	@Override
@@ -48,7 +49,33 @@ public class Player extends Entity {
 	public void dispose() {
 		panim.dispose();
 	}
-
+	
+	public float getHealth() {
+		return health;
+	}
+	
+	public void setHealth(float health) {
+		this.health = health;
+	}
+	
+	
+	public void setStrength(float strength) {
+		this.strength = strength;
+	}
+	
+	public float getStrength() {
+		return strength;
+	}
+	
+	public void setSpeed(float speed) {
+		this.speed = speed;
+	}
+	
+	public float getSpeed() {
+		return speed;
+	}
+	
+	
 	@Override
 	public void update(OrthographicCamera cam, float deltaTime) {
 		

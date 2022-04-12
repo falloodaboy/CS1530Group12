@@ -8,5 +8,9 @@ public class Item extends Image {
 	
 	public Item(ItemType type) {
 		this.type = type;
+		
+		if(this.type == type.HEALTH) {
+			System.out.println("This is the health type");
+		}
 	}
 }

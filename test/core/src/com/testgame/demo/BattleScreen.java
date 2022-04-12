@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Cell;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.badlogic.gdx.scenes.scene2d.ui.ProgressBar;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
@@ -47,7 +48,8 @@ public class BattleScreen implements Screen {
 	private Table root;
 	private TextField topBox;
 	private Table optionsBox, sceneBox;
-	private List options;
+	private ProgressBar playerHealth, enemyHealth;
+	private List<Object> options;
 	private Image playerSprite;
 	private Image enemySprite;
 	private Label optionsGreeter;
@@ -83,9 +85,12 @@ public class BattleScreen implements Screen {
 		topBox = new TextField("Battle Start", skin);
 		optionsBox = new Table();
 		sceneBox = new Table();
-		options = new List(skin);
+		options = new List<Object>(skin);
 		optionsGreeter = new Label("Select an Option Below: ", skin, "holo-light");
-		
+		playerHealth = new ProgressBar(0f, 100f, 1f, false, skin);
+		playerHealth.setValue(100);
+		enemyHealth = new ProgressBar(0f, 100f, 1f, false, skin);
+		enemyHealth.setValue(100);
 		
 		
 		options.setItems(this.getArrayChoices());
@@ -107,6 +112,9 @@ public class BattleScreen implements Screen {
 		Cell<Image> playerCell = sceneBox.add(playerSprite);
 		playerCell.padRight(Value.percentWidth(0.5f, root));
 		sceneBox.add(enemySprite).padLeft(Value.percentWidth(-0.6f, root)).padTop(Value.percentHeight(0.1f, root));
+		playerHealth.setPosition(100, 0);
+		playerHealth.setWidth(300);
+		sceneBox.addActor(playerHealth);
 		root.row();
 		Cell<Table> optionsCell = root.add(optionsBox);
 		optionsBox.left().top();
