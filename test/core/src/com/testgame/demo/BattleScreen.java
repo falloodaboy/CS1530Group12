@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.testgame.demo.entities.*;
+import com.testgame.demo.world.Settings.BattleState;
 
 /**
  *  BattleScreen class for when the player engages the enemy.
@@ -37,8 +38,7 @@ import com.testgame.demo.entities.*;
  */
 public class BattleScreen implements Screen {
 	//class elements
-	private boolean turnLock = true;
-	private boolean monsterTurn = false;
+	private BattleState battleState = BattleState.PLAYERCHOOSE;
 	float time = 0;
 	float actionDelay = 2;
 	private Option[] choices;
@@ -71,7 +71,6 @@ public class BattleScreen implements Screen {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
-		
 		this.createOptions();
 	}
 	
@@ -81,7 +80,7 @@ public class BattleScreen implements Screen {
 		skin = new Skin(Gdx.files.internal("TDS.json"));
 		stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		root = new Table();
-		topBox = new TextField("Battle Start", skin);
+		topBox = new TextField("Your Move!", skin);
 		optionsBox = new Table();
 		sceneBox = new Table();
 		options = new List(skin);
@@ -135,17 +134,24 @@ public class BattleScreen implements Screen {
 			this.dispose();
 		}
 		
-//		System.out.println("turnLock: " + turnLock + "monsterTurn: " + monsterTurn);
-		if(Gdx.input.isKeyJustPressed(Keys.SPACE) && turnLock == true && monsterTurn == false) {
-			turnLock = false;
-			monsterTurn = true;
-			sceneBox.getChild(1).addAction(new DamageAction(0.2f, 0.7f, 5f));			
-		} else if (turnLock == true && monsterTurn == true) {
-			turnLock = false;
-			monsterTurn = false;
-			sceneBox.getChild(0).addAction(new DamageAction(0.2f, 0.7f, 5f));
+		if(Gdx.input.isKeyJustPressed(Keys.SPACE) && battleState == BattleState.PLAYERCHOOSE) {
+			if(sceneBox.getChild(0).getActions().size == 0) {
+				battleState = BattleState.PLAYEREXECUTE;
+				sceneBox.getChild(1).addAction(new DamageAction(0.2f, 0.7f, 5f));			
+				this.executeTurn(delta);
+			}
+		} else if(battleState == BattleState.PLAYEREXECUTE) {
+			if(sceneBox.getChild(1).getActions().size == 0) {
+				sceneBox.getChild(0).addAction(new DamageAction(0.2f, 0.7f, 5f));			
+				battleState = BattleState.ENEMYEXECUTE;
+				this.executeTurn(delta);
+			}
+		} else if(battleState == BattleState.ENEMYEXECUTE) {
+			if(sceneBox.getChild(0).getActions().size == 0) {
+				battleState = BattleState.PLAYERCHOOSE;
+				this.executeTurn(delta);
+			}
 		}
-		this.executeTurn(delta);
 		
 		
 	}
@@ -204,21 +210,29 @@ public class BattleScreen implements Screen {
 	 * Executes the current RPG turn where the player does an action and then the enemy does an action
 	 */
 	private void executeTurn(float delta) {
-		if(turnLock == false) {
+		if(battleState == BattleState.PLAYEREXECUTE) {
 			time += delta;
 			
 			if(time > actionDelay) {
 				time -= actionDelay;
-				turnLock = true;
-//				optionsBox.setVisible(true);
+				optionsBox.setVisible(true);
 			}
 			else {
 				topBox.setText("Monster's move!");
 				optionsBox.setVisible(false);
 			}
-		}
-		if(monsterTurn == false) {
-			topBox.setText("Your move!");
+		} else if (battleState == BattleState.ENEMYEXECUTE) {
+			time += delta;
+			
+			if(time > actionDelay) {
+				time -= actionDelay;
+				optionsBox.setVisible(true);
+			}
+			else {
+				topBox.setText("Your Move!");
+				optionsBox.setVisible(false);
+			}
+		} else if (battleState == BattleState.PLAYERCHOOSE) {
 			optionsBox.setVisible(true);
 		}
 	}
@@ -238,6 +252,5 @@ public class BattleScreen implements Screen {
 		choices[0] = new Option("Fireball          30MP", "Throws a fireball at the enemy");
 		choices[1] = new Option("Heal               12MP", "Recovers your health by 10 points");
 		choices[2] = new Option("Charm            50MP", "50% chance that the enemy does nothing");
-		
 	}
 }

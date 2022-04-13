@@ -7,4 +7,5 @@ public class Settings {
 	public static final float SCALED_TILE_SIZE = SCALE * TILE_SIZE;
 	public static final int PLAYER_WIDTH = 30;
 	public static final int PLAYER_HEIGHT = 30;
+	public enum BattleState { PLAYERCHOOSE, PLAYEREXECUTE, ENEMYEXECUTE; }
 }
