@@ -61,7 +61,7 @@ public class CharacterCreationScreen implements Screen{
 		font = new BitmapFont();
 		font.setColor(Color.WHITE);
 		// background = new Texture("Background.png");
-		title = "Character Creation";
+		title = "Character Selection";
 		message = "Select your character to begin the game!";
 		
 		
@@ -101,15 +101,17 @@ public class CharacterCreationScreen implements Screen{
 		regionBackground = new TextureRegion(backgroundTexture);
 		regionBackground.setRegion(0, 0, backgroundTexture.getWidth(), backgroundTexture.getHeight());
 
-		TextButton spritePlayer2Button = new TextButton("Blue Man", skin);
-		TextButton spritePlayer3Button = new TextButton("Red Man", skin);
-		TextButton spritePlayer4Button = new TextButton("Woman", skin);
+		TextButton nateSpriteButton = new TextButton("Nate", skin);
+		TextButton pyrrhaSpriteButton = new TextButton("Pyrrha", skin);
+		TextButton brendanSpriteButton = new TextButton("Brendan", skin);
+		TextButton charlaSpriteButton = new TextButton("Charla", skin);
+		TextButton julianSpriteButton = new TextButton("Julian", skin);
 		
-		spritePlayer2Button.addListener(new InputListener() {
+		nateSpriteButton.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				boolean answer = true;
-				String spriteSheetFileName = "player2.png";
+				String spriteSheetFileName = "nateSpriteSheet.png";
 			
 				game.setScreen(new GameScreen(game, spriteSheetFileName));
 				dispose();
@@ -119,11 +121,25 @@ public class CharacterCreationScreen implements Screen{
 				return answer;
 			}
 		});
-		spritePlayer3Button.addListener(new InputListener() {
+		pyrrhaSpriteButton.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				boolean answer = true;
-				String spriteSheetFileName = "player3-removebg-preview.png";
+				String spriteSheetFileName = "pyrrhaSpriteSheet.png";
+			
+				game.setScreen(new GameScreen(game, spriteSheetFileName));
+				dispose();
+				textSound.dispose();
+				selectSound.play();
+				
+				return answer;
+			}
+		});
+		brendanSpriteButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				boolean answer = true;
+				String spriteSheetFileName = "brendanSpriteSheet.png";
 				
 				game.setScreen(new GameScreen(game, spriteSheetFileName));
 				dispose();
@@ -133,11 +149,25 @@ public class CharacterCreationScreen implements Screen{
 				return answer;
 			}
 		});
-		spritePlayer4Button.addListener(new InputListener() {
+		charlaSpriteButton.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				boolean answer = true;
-				String spriteSheetFileName = "player4-removebg-preview.png";
+				String spriteSheetFileName = "charlaSpriteSheet.png";
+			
+				game.setScreen(new GameScreen(game, spriteSheetFileName));
+				dispose();
+				textSound.dispose();
+				selectSound.play();
+				
+				return answer;
+			}
+		});
+		julianSpriteButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				boolean answer = true;
+				String spriteSheetFileName = "julianSpriteSheet.png";
 			
 				game.setScreen(new GameScreen(game, spriteSheetFileName));
 				dispose();
@@ -153,11 +183,15 @@ public class CharacterCreationScreen implements Screen{
 		root.center();
 		root.setFillParent(true);
 
-		root.center().add(spritePlayer2Button);
+		root.center().add(nateSpriteButton);
 		root.row().pad(Value.percentWidth(0.02f),Value.percentWidth(0),Value.percentWidth(0.02f), Value.percentWidth(0));
-		root.center().add(spritePlayer3Button);
+		root.center().add(pyrrhaSpriteButton);
 		root.row().pad(Value.percentWidth(0.02f),Value.percentWidth(0),Value.percentWidth(0.02f), Value.percentWidth(0));
-		root.center().add(spritePlayer4Button);
+		root.center().add(brendanSpriteButton);
+		root.row().pad(Value.percentWidth(0.02f),Value.percentWidth(0),Value.percentWidth(0.02f), Value.percentWidth(0));
+		root.center().add(charlaSpriteButton);
+		root.row().pad(Value.percentWidth(0.02f),Value.percentWidth(0),Value.percentWidth(0.02f), Value.percentWidth(0));
+		root.center().add(julianSpriteButton);
 
 		root.setBackground(new TextureRegionDrawable(regionBackground));
 		stage.addActor(root);
