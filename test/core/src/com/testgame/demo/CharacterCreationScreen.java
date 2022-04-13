@@ -10,7 +10,9 @@ import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -60,7 +62,7 @@ public class CharacterCreationScreen implements Screen{
 		font.setColor(Color.WHITE);
 		// background = new Texture("Background.png");
 		title = "Character Creation";
-		message = "Select your character and then begin the game!";
+		message = "Select your character to begin the game!";
 		
 		
 		layout2 = new GlyphLayout(font, message);
@@ -98,15 +100,18 @@ public class CharacterCreationScreen implements Screen{
 		backgroundTexture.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		regionBackground = new TextureRegion(backgroundTexture);
 		regionBackground.setRegion(0, 0, backgroundTexture.getWidth(), backgroundTexture.getHeight());
+
+		TextButton spritePlayer2Button = new TextButton("Blue Man", skin);
+		TextButton spritePlayer3Button = new TextButton("Red Man", skin);
+		TextButton spritePlayer4Button = new TextButton("Woman", skin);
 		
-		
-        /*Button functionality for start game*/
-		newGame.addListener(new InputListener() {
+		spritePlayer2Button.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				boolean answer = true;
+				String spriteSheetFileName = "player2.png";
 			
-				game.setScreen(new GameScreen(game));
+				game.setScreen(new GameScreen(game, spriteSheetFileName));
 				dispose();
 				textSound.dispose();
 				selectSound.play();
@@ -114,14 +119,46 @@ public class CharacterCreationScreen implements Screen{
 				return answer;
 			}
 		});
+		spritePlayer3Button.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				boolean answer = true;
+				String spriteSheetFileName = "player3-removebg-preview.png";
+				
+				game.setScreen(new GameScreen(game, spriteSheetFileName));
+				dispose();
+				textSound.dispose();
+				selectSound.play();
+				
+				return answer;
+			}
+		});
+		spritePlayer4Button.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				boolean answer = true;
+				String spriteSheetFileName = "player4-removebg-preview.png";
+			
+				game.setScreen(new GameScreen(game, spriteSheetFileName));
+				dispose();
+				textSound.dispose();
+				selectSound.play();
+				
+				return answer;
+			}
+		});
+		
 
 		Gdx.input.setInputProcessor(stage);
 		root.center();
 		root.setFillParent(true);
-        
+
+		root.center().add(spritePlayer2Button);
 		root.row().pad(Value.percentWidth(0.02f),Value.percentWidth(0),Value.percentWidth(0.02f), Value.percentWidth(0));
-		root.bottom().add(newGame);
+		root.center().add(spritePlayer3Button);
 		root.row().pad(Value.percentWidth(0.02f),Value.percentWidth(0),Value.percentWidth(0.02f), Value.percentWidth(0));
+		root.center().add(spritePlayer4Button);
+
 		root.setBackground(new TextureRegionDrawable(regionBackground));
 		stage.addActor(root);
 	}

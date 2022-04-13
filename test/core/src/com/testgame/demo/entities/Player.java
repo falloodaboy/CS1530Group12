@@ -20,9 +20,9 @@ public class Player extends Entity {
 	private int lastPressed = -1;
 	private double score;
 	
-	public Player(float x, float y, TiledGameMap map) {
+	public Player(float x, float y, TiledGameMap map, String spriteSheetFileName) {
 		super(x, y, EntitiesType.PLAYER, map);
-		spritesheet = new Texture(Gdx.files.internal("player2.png"));
+		spritesheet = new Texture(Gdx.files.internal(spriteSheetFileName));
 		panim = new PlayerAnimation(spritesheet, 64, 64);
 		score = 0;
 		
