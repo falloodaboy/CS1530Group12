@@ -29,7 +29,7 @@ public class TiledGameMap extends GameMap {
 		maprenderer = new OrthogonalTiledMapRenderer(tileMap);
 		background = new Texture("Background.png");
 		
-		Settings.entities.add(new Player(-10, 0, this));
+		Settings.entities.add(new Player(-10, 0, this, "player2.png"));
 	}
 	
 	

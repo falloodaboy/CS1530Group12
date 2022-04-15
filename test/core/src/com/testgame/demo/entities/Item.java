@@ -10,7 +10,7 @@ public class Item extends Image {
 		this.type = type;
 		
 		if(this.type == type.HEALTH) {
-			System.out.println("This is the health type");
+			System.out.println("This is the health type (it is a check)");
 		}
 	}
 }

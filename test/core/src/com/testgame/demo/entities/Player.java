@@ -21,9 +21,9 @@ public class Player extends Entity {
 	private double score = 0;
 	private ArrayList<Item> items;
 	
-	public Player(float x, float y, TiledGameMap map) {
+	public Player(float x, float y, TiledGameMap map, String spriteSheetFileName) {
 		super(x, y, EntitiesType.PLAYER, map);
-		spritesheet = new Texture(Gdx.files.internal("player2.png"));
+		spritesheet = new Texture(Gdx.files.internal(spriteSheetFileName));
 		panim = new PlayerAnimation(spritesheet, 64, 64);
 		items = new ArrayList<>();
 		health = 100;
@@ -48,6 +48,11 @@ public class Player extends Entity {
 	@Override
 	public void dispose() {
 		panim.dispose();
+	}
+	
+	
+	public void changePlayerSprite() {
+		
 	}
 	
 	public float getHealth() {
