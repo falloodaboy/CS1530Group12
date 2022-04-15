@@ -24,12 +24,15 @@ public class TiledGameMap extends GameMap {
 	private OrthogonalTiledMapRenderer maprenderer;
 	private Texture background;
 	
-	public TiledGameMap() {
+	public TiledGameMap(String spriteSheetFileName) {
 		tileMap = new TmxMapLoader().load("basemap.tmx");
 		maprenderer = new OrthogonalTiledMapRenderer(tileMap);
 		background = new Texture("Background.png");
 		
-		Settings.entities.add(new Player(-10, 0, this, "player2.png"));
+		
+		
+		Settings.entities.add(new Player(-10, 0, this, spriteSheetFileName));
+
 	}
 	
 	

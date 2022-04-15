@@ -10,7 +10,9 @@ import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.EventListener;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -59,8 +61,8 @@ public class CharacterCreationScreen implements Screen{
 		font = new BitmapFont();
 		font.setColor(Color.WHITE);
 		// background = new Texture("Background.png");
-		title = "Character Creation";
-		message = "Select your character and then begin the game!";
+		title = "Character Selection";
+		message = "Select your character to begin the game!";
 		
 		
 		layout2 = new GlyphLayout(font, message);
@@ -98,15 +100,20 @@ public class CharacterCreationScreen implements Screen{
 		backgroundTexture.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		regionBackground = new TextureRegion(backgroundTexture);
 		regionBackground.setRegion(0, 0, backgroundTexture.getWidth(), backgroundTexture.getHeight());
+
+		TextButton nateSpriteButton = new TextButton("Nate", skin);
+		TextButton pyrrhaSpriteButton = new TextButton("Pyrrha", skin);
+		TextButton brendanSpriteButton = new TextButton("Brendan", skin);
+		TextButton charlaSpriteButton = new TextButton("Charla", skin);
+		TextButton julianSpriteButton = new TextButton("Julian", skin);
 		
-		
-        /*Button functionality for start game*/
-		newGame.addListener(new InputListener() {
+		nateSpriteButton.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				boolean answer = true;
+				String spriteSheetFileName = "nateSpriteSheet.png";
 			
-				game.setScreen(new GameScreen(game));
+				game.setScreen(new GameScreen(game, spriteSheetFileName));
 				dispose();
 				textSound.dispose();
 				selectSound.play();
@@ -114,14 +121,78 @@ public class CharacterCreationScreen implements Screen{
 				return answer;
 			}
 		});
+		pyrrhaSpriteButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				boolean answer = true;
+				String spriteSheetFileName = "pyrrhaSpriteSheet.png";
+			
+				game.setScreen(new GameScreen(game, spriteSheetFileName));
+				dispose();
+				textSound.dispose();
+				selectSound.play();
+				
+				return answer;
+			}
+		});
+		brendanSpriteButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				boolean answer = true;
+				String spriteSheetFileName = "brendanSpriteSheet.png";
+				
+				game.setScreen(new GameScreen(game, spriteSheetFileName));
+				dispose();
+				textSound.dispose();
+				selectSound.play();
+				
+				return answer;
+			}
+		});
+		charlaSpriteButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				boolean answer = true;
+				String spriteSheetFileName = "charlaSpriteSheet.png";
+			
+				game.setScreen(new GameScreen(game, spriteSheetFileName));
+				dispose();
+				textSound.dispose();
+				selectSound.play();
+				
+				return answer;
+			}
+		});
+		julianSpriteButton.addListener(new InputListener() {
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				boolean answer = true;
+				String spriteSheetFileName = "julianSpriteSheet.png";
+			
+				game.setScreen(new GameScreen(game, spriteSheetFileName));
+				dispose();
+				textSound.dispose();
+				selectSound.play();
+				
+				return answer;
+			}
+		});
+		
 
 		Gdx.input.setInputProcessor(stage);
 		root.center();
 		root.setFillParent(true);
-        
+
+		root.center().add(nateSpriteButton);
 		root.row().pad(Value.percentWidth(0.02f),Value.percentWidth(0),Value.percentWidth(0.02f), Value.percentWidth(0));
-		root.bottom().add(newGame);
+		root.center().add(pyrrhaSpriteButton);
 		root.row().pad(Value.percentWidth(0.02f),Value.percentWidth(0),Value.percentWidth(0.02f), Value.percentWidth(0));
+		root.center().add(brendanSpriteButton);
+		root.row().pad(Value.percentWidth(0.02f),Value.percentWidth(0),Value.percentWidth(0.02f), Value.percentWidth(0));
+		root.center().add(charlaSpriteButton);
+		root.row().pad(Value.percentWidth(0.02f),Value.percentWidth(0),Value.percentWidth(0.02f), Value.percentWidth(0));
+		root.center().add(julianSpriteButton);
+
 		root.setBackground(new TextureRegionDrawable(regionBackground));
 		stage.addActor(root);
 	}

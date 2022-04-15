@@ -21,9 +21,9 @@ public class GameScreen implements Screen {
 	public OrthographicCamera cam;
 	private Music bgm;
 	
-	public GameScreen(TerraRogueDemo game) {
+	public GameScreen(TerraRogueDemo game, String spriteSheetFileName) {
 		this.game = game;
-		gamemap = new TiledGameMap();
+		gamemap = new TiledGameMap(spriteSheetFileName);
 		cam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		game.batch.setProjectionMatrix(cam.combined);
 		cam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
