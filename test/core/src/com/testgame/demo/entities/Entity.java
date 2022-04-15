@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.testgame.demo.world.GameMap;
+import com.testgame.demo.world.Settings;
 import com.testgame.demo.world.TileType;
 import com.testgame.demo.world.TiledGameMap;
 
@@ -13,12 +14,19 @@ public abstract class Entity {
 	protected Vector2 pos;
 	protected EntitiesType type;
 	protected TiledGameMap map;
+	protected float ID = Settings.getNextID();
+	protected float health, speed, strength;
+	
 	
 	
 	public Entity(float x, float y, EntitiesType type, TiledGameMap map) {
 		this.pos = new Vector2(x, y);
 		this.type = type;
 		this.map = map;
+		
+		health = type.getStamina();
+		speed = type.getSpeed();
+		strength = type.getStrength();
 	}
 	
 	public abstract void render(OrthographicCamera cam, SpriteBatch batch);
@@ -55,6 +63,14 @@ public abstract class Entity {
 	
 	public void setType(EntitiesType type) {
 		this.type = type;
+	}
+	
+	public float getID() {
+		return ID;
+	}
+	
+	public void setID(float ID) {
+		this.ID = ID;
 	}
 	
 	//Do collision detection for x-axis here

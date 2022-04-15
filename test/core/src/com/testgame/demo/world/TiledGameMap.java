@@ -28,8 +28,11 @@ public class TiledGameMap extends GameMap {
 		tileMap = new TmxMapLoader().load("basemap.tmx");
 		maprenderer = new OrthogonalTiledMapRenderer(tileMap);
 		background = new Texture("Background.png");
-		entities = new ArrayList<>();
-		entities.add(new Player(-10, 0, this, spriteSheetFileName));
+		
+		
+		
+		Settings.entities.add(new Player(-10, 0, this, spriteSheetFileName));
+
 	}
 	
 	
@@ -39,7 +42,7 @@ public class TiledGameMap extends GameMap {
 		maprenderer.setView(camera);
 		maprenderer.render();
 		batch.begin();
-		for(Entity entry : entities) {
+		for(Entity entry : Settings.entities) {
 			entry.render(camera, batch);
 		}
 		batch.end();
@@ -47,7 +50,7 @@ public class TiledGameMap extends GameMap {
 
 	@Override
 	public void update(OrthographicCamera camera, float deltaTime) {
-		for(Entity entry: entities) {
+		for(Entity entry: Settings.entities) {
 			entry.update(camera, deltaTime);
 		}
 	}
@@ -72,7 +75,7 @@ public class TiledGameMap extends GameMap {
 		tileMap.dispose();
 		maprenderer.dispose();
 		background.dispose();
-		for(Entity entry: entities) {
+		for(Entity entry: Settings.entities) {
 			entry.dispose();
 		}
 	}
