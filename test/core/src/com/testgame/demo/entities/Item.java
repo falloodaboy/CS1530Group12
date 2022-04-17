@@ -10,7 +10,11 @@ public class Item extends Image {
 		this.type = type;
 		
 		if(this.type == type.HEALTH) {
+<<<<<<< HEAD
 			System.out.println("This is the health type (it is a check)");
+=======
+			System.out.println("This is the health type");
+>>>>>>> 63c77ec (added progress bar and item state)
 		}
 	}
 }
