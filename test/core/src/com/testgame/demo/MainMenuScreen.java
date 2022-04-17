@@ -90,7 +90,7 @@ public class MainMenuScreen implements Screen {
 	@Override
 	public void show() {
 		// Main menu buttons
-		skin = new Skin(Gdx.files.internal("craftacular-ui.json"));
+		skin = new Skin(Gdx.files.internal("TDS.json"));
 		root = new Table(skin);
 		// TODO: double check this
 		stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
@@ -101,7 +101,8 @@ public class MainMenuScreen implements Screen {
 		regionBackground.setRegion(0, 0, backgroundTexture.getWidth(), backgroundTexture.getHeight());
 		loadGame = new TextButton("Load Game", skin);
 		
-		
+		newGame.pad(0, 50, 0, 50);
+		loadGame.pad(0, 43, 0, 43);
 		newGame.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {

@@ -91,7 +91,7 @@ public class CharacterCreationScreen implements Screen{
 	@Override
 	public void show() {
 		// Main menu buttons
-		skin = new Skin(Gdx.files.internal("craftacular-ui.json"));
+		skin = new Skin(Gdx.files.internal("TDS.json"));
 		root = new Table(skin);
 		// TODO: double check this
 		stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
