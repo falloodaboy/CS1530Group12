@@ -170,7 +170,7 @@ public class PauseScreen implements Screen {
 		stage.dispose();
 		skin.dispose();
 		pauseSound.dispose();
-
+		tdsatlas.dispose();
 	}
 	
 	
