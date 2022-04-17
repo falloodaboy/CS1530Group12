@@ -50,14 +50,6 @@ public class Player extends Entity {
 		panim.dispose();
 	}
 	
-<<<<<<< HEAD
-	
-	public void changePlayerSprite() {
-		
-	}
-	
-=======
->>>>>>> 63c77ec (added progress bar and item state)
 	public float getHealth() {
 		return health;
 	}

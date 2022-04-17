@@ -40,6 +40,7 @@ public class PauseScreen implements Screen {
 	private GameScreen gameScreen;
 	private Window window;
 	private Music pauseSound;
+	private TextureAtlas tdsatlas;
 	
 	public PauseScreen(Game game, OrthographicCamera cam, GameScreen gameScreen) {
 		
@@ -53,6 +54,7 @@ public class PauseScreen implements Screen {
 			System.out.print(e);
 		}
 		
+		tdsatlas = new TextureAtlas(Gdx.files.internal("TDS.atlas"));
 	}
 	
 	
@@ -60,14 +62,14 @@ public class PauseScreen implements Screen {
 	public void show() {
 		pauseSound.play();
 		
-		skin = new Skin(Gdx.files.internal("craftacular-ui.json"));
+		skin = new Skin(Gdx.files.internal("TDS.json"));
 		title = new Label("Paused Game", skin, "title");
 		root = new Table(skin);
 		stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
-		backgroundTexture = new Texture("dirt.png");
-		backgroundTexture.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
-		regionBackground = new TextureRegion(backgroundTexture);
-		regionBackground.setRegion(0, 0, backgroundTexture.getWidth()*10, backgroundTexture.getHeight()*10);
+		//backgroundTexture = ;
+//		backgroundTexture.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
+		//regionBackground = new TextureRegion(backgroundTexture);
+		//regionBackground.setRegion(0, 0, backgroundTexture.getWidth()*10, backgroundTexture.getHeight()*10);
 		
 		save = new TextButton("Save Game", skin);
 		resume = new TextButton("Resume", skin);
@@ -120,7 +122,7 @@ public class PauseScreen implements Screen {
 		root.add(resume);
 		root.row().pad(Value.percentWidth(0.02f),Value.percentWidth(0),Value.percentWidth(0.02f), Value.percentWidth(0));
 		root.add(exit);
-		root.setBackground(new TextureRegionDrawable(regionBackground));
+		root.setBackground(new TextureRegionDrawable(tdsatlas.findRegion("Background")));
 		stage.addActor(root);
 
 	}
