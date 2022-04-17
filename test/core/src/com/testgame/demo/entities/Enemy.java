@@ -12,10 +12,13 @@ public class Enemy extends Entity {
 	private Texture image;
 	private double points;
 	private EnemyAnimation eanim;
+	public int facing;
 	
-	public Enemy(float x, float y, EntitiesType type, TiledGameMap map, Texture image) {
+	public Enemy(float x, float y, EntitiesType type, TiledGameMap map, Texture image, int facing) {
 		super(x, y, type, map);
-		points = 0;
+		points = 100;
+		this.image = image;
+		this.facing = facing;
 	}
 
 	@Override

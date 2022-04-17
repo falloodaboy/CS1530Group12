@@ -52,7 +52,6 @@ public class MainMenuScreen implements Screen {
 	private TextButton newGame, loadGame;
 	private Table root;
 	private Texture backgroundTexture;
-	private TextureAtlas atlas;
 	private Label titler;
 	
 	public MainMenuScreen(TerraRogueDemo game) {
@@ -228,7 +227,6 @@ public class MainMenuScreen implements Screen {
 		selectSound.dispose();
 		skin.dispose();
 		stage.dispose();
-		atlas.dispose();
 	}
 
 }

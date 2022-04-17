@@ -1,6 +1,7 @@
 package com.testgame.demo.world;
 import java.util.ArrayList;
 
+import com.testgame.demo.entities.Enemy;
 import com.testgame.demo.entities.Entity;
 
 public class Settings {
@@ -11,6 +12,9 @@ public class Settings {
 	public static final int PLAYER_WIDTH = 30;
 	public static final int PLAYER_HEIGHT = 30;
 	private static float ID = 0;
+	
+	
+	public static Enemy currentEnemy = null; //set this to the enemy that is within the player's vicinity.
 	
 	public static ArrayList<Entity> entities = new ArrayList<>();
 	
