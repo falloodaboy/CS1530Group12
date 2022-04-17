@@ -55,11 +55,11 @@ public class Player extends Entity {
 		
 	}
 	
-	public float getHealth() {
+	public int getHealth() {
 		return health;
 	}
 	
-	public void setHealth(float health) {
+	public void setHealth(int health) {
 		this.health = health;
 	}
 	
@@ -78,6 +78,10 @@ public class Player extends Entity {
 	
 	public float getSpeed() {
 		return speed;
+	}
+	
+	public void subtractHealth(int damage) {
+		this.health = this.getHealth() - damage;
 	}
 	
 	
