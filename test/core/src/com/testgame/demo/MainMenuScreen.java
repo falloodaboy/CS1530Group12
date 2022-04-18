@@ -106,6 +106,7 @@ public class MainMenuScreen implements Screen {
 		titler.setFontScale(0.50f);
 		newGame.pad(0, 50, 0, 50);
 		loadGame.pad(0, 43, 0, 43);
+		
 		newGame.addListener(new InputListener() {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
@@ -113,7 +114,7 @@ public class MainMenuScreen implements Screen {
 				
 				//insert code
 				//game.setScreen(new GameScreen(game));
-				game.setScreen(new CharacterCreationScreen(game));
+				game.setScreen(new CharacterCreationScreen(game, MainMenuScreen.this));
 				dispose();
 				textSound.dispose();
 				selectSound.play();

@@ -1,9 +1,6 @@
 package com.testgame.demo.world;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -26,6 +23,7 @@ public class TiledGameMap extends GameMap {
 	private OrthogonalTiledMapRenderer maprenderer;
 	private Texture background;
 	private Player player;
+	
 	public TiledGameMap(String spriteSheetFileName) {
 		tileMap = new TmxMapLoader().load("basemap.tmx");
 		maprenderer = new OrthogonalTiledMapRenderer(tileMap);
@@ -50,7 +48,7 @@ public class TiledGameMap extends GameMap {
 		}
 		
 		if(this.checkEnemyEngage(player)) {
-			System.out.println("looking at enemy");
+			
 		}
 		
 		

@@ -20,6 +20,7 @@ public class Enemy extends Entity {
 		points = 100;
 		this.image = image;
 		this.facing = facing;
+		
 	}
 
 	@Override
@@ -31,7 +32,7 @@ public class Enemy extends Entity {
 	@Override
 	public void dispose() {
 		image.dispose();
-		eanim.dispose();
+		//eanim.dispose();
 		
 	}
 

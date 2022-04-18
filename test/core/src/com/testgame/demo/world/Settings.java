@@ -22,4 +22,9 @@ public class Settings {
 	public static float getNextID() {
 		return ID++;
 	}
+	
+	public static void clear() {
+		entities.clear();
+		currentEnemy = null;
+	}
 }
