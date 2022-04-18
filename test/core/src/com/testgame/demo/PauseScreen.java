@@ -25,25 +25,29 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.testgame.demo.world.Settings;
 
 public class PauseScreen implements Screen {
 
-	private Game game;
+	private TerraRogueDemo game;
 	private OrthographicCamera cam;
 	private Stage stage;
 	private Table root;
 	private TextureRegion regionBackground;
 	private Texture backgroundTexture;
 	private Label title;
-	private TextButton save, resume, exit;
+	private TextButton save, resume, mainmenu, exit;
 	private Skin skin;
 	private GameScreen gameScreen;
 	private Window window;
 	private Music pauseSound;
+	private TextureAtlas tdsatlas;
+	private MainMenuScreen menuscreen;
 	
-	public PauseScreen(Game game, OrthographicCamera cam, GameScreen gameScreen) {
+	public PauseScreen(TerraRogueDemo game, OrthographicCamera cam, GameScreen gameScreen, MainMenuScreen menu) {
 		
 		this.game = game;
+		menuscreen = menu;
 		this.cam = cam;
 		this.gameScreen = gameScreen;
 		try {
@@ -53,6 +57,7 @@ public class PauseScreen implements Screen {
 			System.out.print(e);
 		}
 		
+		tdsatlas = new TextureAtlas(Gdx.files.internal("TDS.atlas"));
 	}
 	
 	
@@ -60,19 +65,19 @@ public class PauseScreen implements Screen {
 	public void show() {
 		pauseSound.play();
 		
-		skin = new Skin(Gdx.files.internal("craftacular-ui.json"));
+		skin = new Skin(Gdx.files.internal("TDS.json"));
 		title = new Label("Paused Game", skin, "title");
 		root = new Table(skin);
 		stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
-		backgroundTexture = new Texture("dirt.png");
-		backgroundTexture.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
-		regionBackground = new TextureRegion(backgroundTexture);
-		regionBackground.setRegion(0, 0, backgroundTexture.getWidth()*10, backgroundTexture.getHeight()*10);
+		//backgroundTexture = ;
+//		backgroundTexture.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
+		//regionBackground = new TextureRegion(backgroundTexture);
+		//regionBackground.setRegion(0, 0, backgroundTexture.getWidth()*10, backgroundTexture.getHeight()*10);
 		
 		save = new TextButton("Save Game", skin);
 		resume = new TextButton("Resume", skin);
 		exit = new TextButton("Exit", skin);
-		
+		mainmenu = new TextButton("Main Menu", skin);
 		
 		
 		exit.addListener(new InputListener() {
@@ -106,8 +111,21 @@ public class PauseScreen implements Screen {
 				
 				return answer;
 			}
-	});
+		});
 		
+		mainmenu.addListener(new InputListener() {
+			 @Override
+			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
+				boolean answer = true;
+				gameScreen.dispose();
+				PauseScreen.this.dispose();
+				Settings.clear();
+				game.setScreen(new MainMenuScreen(game));
+				return answer;
+			}
+		});
+		
+
 		Gdx.input.setInputProcessor(stage);
 		root.center();
 		root.setFillParent(true);
@@ -119,8 +137,10 @@ public class PauseScreen implements Screen {
 		root.row().pad(Value.percentWidth(0.02f),Value.percentWidth(0),Value.percentWidth(0.02f), Value.percentWidth(0));
 		root.add(resume);
 		root.row().pad(Value.percentWidth(0.02f),Value.percentWidth(0),Value.percentWidth(0.02f), Value.percentWidth(0));
+		root.add(mainmenu);
+		root.row().pad(Value.percentWidth(0.02f),Value.percentWidth(0),Value.percentWidth(0.02f), Value.percentWidth(0));
 		root.add(exit);
-		root.setBackground(new TextureRegionDrawable(regionBackground));
+		root.setBackground(new TextureRegionDrawable(tdsatlas.findRegion("Background")));
 		stage.addActor(root);
 
 	}
@@ -168,7 +188,7 @@ public class PauseScreen implements Screen {
 		stage.dispose();
 		skin.dispose();
 		pauseSound.dispose();
-
+		tdsatlas.dispose();
 	}
 	
 	

@@ -51,10 +51,12 @@ public class CharacterCreationScreen implements Screen{
 	private TextButton newGame;
 	private Table root;
 	private Texture backgroundTexture;
+	private MainMenuScreen menuscreen;
 	
-	public CharacterCreationScreen(TerraRogueDemo game) {
+	public CharacterCreationScreen(TerraRogueDemo game, MainMenuScreen menu) {
 		this.game = game;
 		cam = new OrthographicCamera();
+		menuscreen = menu;
 		cam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		game.batch.setProjectionMatrix(cam.combined);
 		cam.update();
@@ -91,7 +93,7 @@ public class CharacterCreationScreen implements Screen{
 	@Override
 	public void show() {
 		// Main menu buttons
-		skin = new Skin(Gdx.files.internal("craftacular-ui.json"));
+		skin = new Skin(Gdx.files.internal("TDS.json"));
 		root = new Table(skin);
 		// TODO: double check this
 		stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
@@ -113,7 +115,7 @@ public class CharacterCreationScreen implements Screen{
 				boolean answer = true;
 				String spriteSheetFileName = "nateSpriteSheet.png";
 			
-				game.setScreen(new GameScreen(game, spriteSheetFileName));
+				game.setScreen(new GameScreen(game, spriteSheetFileName, menuscreen));
 				dispose();
 				textSound.dispose();
 				selectSound.play();
@@ -127,7 +129,7 @@ public class CharacterCreationScreen implements Screen{
 				boolean answer = true;
 				String spriteSheetFileName = "pyrrhaSpriteSheet.png";
 			
-				game.setScreen(new GameScreen(game, spriteSheetFileName));
+				game.setScreen(new GameScreen(game, spriteSheetFileName, menuscreen));
 				dispose();
 				textSound.dispose();
 				selectSound.play();
@@ -141,7 +143,7 @@ public class CharacterCreationScreen implements Screen{
 				boolean answer = true;
 				String spriteSheetFileName = "brendanSpriteSheet.png";
 				
-				game.setScreen(new GameScreen(game, spriteSheetFileName));
+				game.setScreen(new GameScreen(game, spriteSheetFileName, menuscreen));
 				dispose();
 				textSound.dispose();
 				selectSound.play();
@@ -155,7 +157,7 @@ public class CharacterCreationScreen implements Screen{
 				boolean answer = true;
 				String spriteSheetFileName = "charlaSpriteSheet.png";
 			
-				game.setScreen(new GameScreen(game, spriteSheetFileName));
+				game.setScreen(new GameScreen(game, spriteSheetFileName, menuscreen));
 				dispose();
 				textSound.dispose();
 				selectSound.play();
@@ -169,7 +171,7 @@ public class CharacterCreationScreen implements Screen{
 				boolean answer = true;
 				String spriteSheetFileName = "julianSpriteSheet.png";
 			
-				game.setScreen(new GameScreen(game, spriteSheetFileName));
+				game.setScreen(new GameScreen(game, spriteSheetFileName, menuscreen));
 				dispose();
 				textSound.dispose();
 				selectSound.play();

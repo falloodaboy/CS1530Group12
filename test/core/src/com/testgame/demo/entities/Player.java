@@ -50,12 +50,13 @@ public class Player extends Entity {
 		panim.dispose();
 	}
 	
-	
+
 	public void changePlayerSprite() {
 		
 	}
 	
 	public int getHealth() {
+
 		return health;
 	}
 	

@@ -1,9 +1,6 @@
 package com.testgame.demo.world;
 
-import java.util.ArrayList;
-
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -13,6 +10,8 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer;
 import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.testgame.demo.entities.Enemy;
+import com.testgame.demo.entities.EntitiesType;
 import com.testgame.demo.entities.Entity;
 import com.testgame.demo.entities.Player;
 
@@ -23,16 +22,17 @@ public class TiledGameMap extends GameMap {
 	private TiledMapTileLayer collisionLayer;
 	private OrthogonalTiledMapRenderer maprenderer;
 	private Texture background;
+	private Player player;
 	
 	public TiledGameMap(String spriteSheetFileName) {
 		tileMap = new TmxMapLoader().load("basemap.tmx");
 		maprenderer = new OrthogonalTiledMapRenderer(tileMap);
 		background = new Texture("Background.png");
 		
-		
-		
-		Settings.entities.add(new Player(-10, 0, this, spriteSheetFileName));
-
+		player = new Player(-10, 0, this, spriteSheetFileName);
+		Enemy enm = new Enemy(72 , 40, EntitiesType.ENEMYA, this, new Texture(Gdx.files.internal("testenm.png")), 1);
+		Settings.entities.add(player);
+		Settings.entities.add(enm);
 	}
 	
 	
@@ -42,9 +42,16 @@ public class TiledGameMap extends GameMap {
 		maprenderer.setView(camera);
 		maprenderer.render();
 		batch.begin();
+		
 		for(Entity entry : Settings.entities) {
 			entry.render(camera, batch);
 		}
+		
+		if(this.checkEnemyEngage(player)) {
+			
+		}
+		
+		
 		batch.end();
 	}
 
@@ -157,7 +164,55 @@ public class TiledGameMap extends GameMap {
 	public void saveGame() {
 		
 	}
+	/**
+	 * 
+	 * @return true if the player is in the vicinity of an enemy within one block. False otherwise.
+	 */
+	public boolean checkEnemyEngage(Player player) {
+		boolean answer = false;
+		
+		for(Entity entry : Settings.entities) {
+			if(entry.getClass().getSimpleName().equals("Enemy")) {
+				Enemy enm = (Enemy) entry;
+				
+				switch(enm.facing) {
+				case 0: //North
+						if(this.getTile(player.getX()) == this.getTile(enm.getX()) && this.getTile(player.getY()) == this.getTile(enm.getY()) + 1) {
+							answer = true;
+							Settings.currentEnemy = enm;
+						}
+					break;
+				case 1: //East
+					if(this.getTile(player.getX()) == this.getTile(enm.getX())+1 && this.getTile(player.getY()) == this.getTile(enm.getY())) {
+						answer = true;
+						Settings.currentEnemy = enm;
+					}
+					
+					break;
+				case 2: //South
+					if(this.getTile(player.getX()) == this.getTile(enm.getX()) && this.getTile(player.getY()) == this.getTile(enm.getY()) - 1) {
+						answer = true;
+						Settings.currentEnemy = enm;
+					}
+					break;
+				case 3: //West
+					if(this.getTile(player.getX()) == this.getTile(enm.getX())-1 && this.getTile(player.getY()) == this.getTile(enm.getY())) {
+						answer = true;
+						Settings.currentEnemy = enm;
+					}
+					break;
+				}
+			}
+		}
+		
+		
+		
+		return answer;
+	}
 	
+	private int getTile(float val) {
+		return (int)(val / Settings.TILE_SIZE);
+	}
 	
 	private class Corner {
 		
@@ -169,5 +224,6 @@ public class TiledGameMap extends GameMap {
 			this.y = y;
 		}
 	}
+
 
 }

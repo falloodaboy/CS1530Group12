@@ -9,7 +9,9 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.Texture.TextureWrap;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -50,6 +52,7 @@ public class MainMenuScreen implements Screen {
 	private TextButton newGame, loadGame;
 	private Table root;
 	private Texture backgroundTexture;
+	private Label titler;
 	
 	public MainMenuScreen(TerraRogueDemo game) {
 		this.game = game;
@@ -68,7 +71,6 @@ public class MainMenuScreen implements Screen {
 		try {
 			
 			mill = new BitmapFont(Gdx.files.internal("FutureMillennium.fnt"));
-			mill.setColor(Color.WHITE);
 			layout = new GlyphLayout(mill, title);
 			bgm = Gdx.audio.newMusic(Gdx.files.internal("deathnote.mp3"));
 			bgm.setVolume(0.1f);
@@ -90,7 +92,7 @@ public class MainMenuScreen implements Screen {
 	@Override
 	public void show() {
 		// Main menu buttons
-		skin = new Skin(Gdx.files.internal("craftacular-ui.json"));
+		skin = new Skin(Gdx.files.internal("TDS.json"));
 		root = new Table(skin);
 		// TODO: double check this
 		stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
@@ -100,7 +102,10 @@ public class MainMenuScreen implements Screen {
 		regionBackground = new TextureRegion(backgroundTexture);
 		regionBackground.setRegion(0, 0, backgroundTexture.getWidth(), backgroundTexture.getHeight());
 		loadGame = new TextButton("Load Game", skin);
-		
+		titler = new Label(drawTitle, skin, "title");
+		titler.setFontScale(0.50f);
+		newGame.pad(0, 50, 0, 50);
+		loadGame.pad(0, 43, 0, 43);
 		
 		newGame.addListener(new InputListener() {
 			@Override
@@ -109,7 +114,7 @@ public class MainMenuScreen implements Screen {
 				
 				//insert code
 				//game.setScreen(new GameScreen(game));
-				game.setScreen(new CharacterCreationScreen(game));
+				game.setScreen(new CharacterCreationScreen(game, MainMenuScreen.this));
 				dispose();
 				textSound.dispose();
 				selectSound.play();
@@ -140,12 +145,15 @@ public class MainMenuScreen implements Screen {
 		root.add(loadGame);
 		root.row().pad(Value.percentWidth(0.02f),Value.percentWidth(0),Value.percentWidth(0.02f), Value.percentWidth(0));
 		root.setBackground(new TextureRegionDrawable(regionBackground));
+		
 		stage.addActor(root);
+		stage.addActor(titler);
+		
 	}
 
 	@Override
 	public void render(float delta) {
-
+		
 		
 		bgm.play();
 		stage.draw();
@@ -158,6 +166,7 @@ public class MainMenuScreen implements Screen {
 			// Render title
 		if (timer >= letterSpawnTime && stringIndexTitle != title.length()) {
 			drawTitle = drawTitle + title.charAt(stringIndexTitle);
+			titler.setText(drawTitle + title.charAt(stringIndexTitle));
 			stringIndexTitle++;
 			timer -= letterSpawnTime;        
 			textSound.play();
@@ -179,12 +188,13 @@ public class MainMenuScreen implements Screen {
 
 	
 		//Draw menu here
-		mill.draw(game.batch, drawTitle, (cam.viewportWidth)/2 - layout.width/2, cam.viewportHeight - 50);
+		//mill.draw(game.batch, drawTitle, (cam.viewportWidth)/2 - layout.width/2, cam.viewportHeight - 50);
 		font.draw(game.batch, drawMessage, cam.viewportWidth/2 - layout2.width/2, cam.viewportHeight - layout.height*2 - 50);
 		
 		game.batch.end();
 			
-		
+		titler.setX( (Gdx.graphics.getWidth() / 2) - titler.getPrefWidth()/2);
+		titler.setY(Gdx.graphics.getHeight() - 50);
 		
 
 	}

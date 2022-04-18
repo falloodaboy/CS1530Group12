@@ -287,11 +287,11 @@ public class BattleScreen implements Screen {
 	}
 	
 	private void createOptions() {
-		choices = new Option[3];
+		choices = new Option[4];
 		
 		choices[0] = new Option("Fireball          30MP", "Throws a fireball at the enemy");
 		choices[1] = new Option("Heal               12MP", "Recovers your health by 10 points");
 		choices[2] = new Option("Charm            50MP", "50% chance that the enemy does nothing");
-		
+		choices[3] = new Option("Icicle              40MP", "Attack the enemy with an icicle");	
 	}
 }

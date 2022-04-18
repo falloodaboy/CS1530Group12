@@ -20,13 +20,15 @@ public class GameScreen implements Screen {
 	public TerraRogueDemo game;
 	public OrthographicCamera cam;
 	private Music bgm;
+	private MainMenuScreen menuscreen;
 	
-	public GameScreen(TerraRogueDemo game, String spriteSheetFileName) {
+	public GameScreen(TerraRogueDemo game, String spriteSheetFileName, MainMenuScreen mainmenu) {
 		this.game = game;
 		gamemap = new TiledGameMap(spriteSheetFileName);
 		cam = new OrthographicCamera(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		game.batch.setProjectionMatrix(cam.combined);
 		cam.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		menuscreen = mainmenu;
 		cam.update();
 		try {
 			bgm = Gdx.audio.newMusic(Gdx.files.internal("kiliansWake.mp3"));
@@ -38,6 +40,7 @@ public class GameScreen implements Screen {
 		}
 		
 	}
+	
 	
 	
 	@Override
@@ -61,7 +64,7 @@ public class GameScreen implements Screen {
 		}
 		
 		if(Gdx.input.isKeyJustPressed(Keys.P)) {
-			game.setScreen(new PauseScreen(game, cam, this));
+			game.setScreen(new PauseScreen(game, cam, this, menuscreen));
 			this.pause();
 		}
 		
@@ -73,6 +76,7 @@ public class GameScreen implements Screen {
 		if(Gdx.input.isKeyJustPressed(Keys.B)) {
 			game.setScreen(new BattleScreen(game, this));
 			bgm.pause();
+			this.pause();
 		}
 	}
 
