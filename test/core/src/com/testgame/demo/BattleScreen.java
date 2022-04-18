@@ -22,6 +22,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.testgame.demo.entities.*;
+import com.testgame.demo.world.Settings.BattleState;
+import com.testgame.demo.world.Settings;
+import java.util.Random;
 
 /**
  *  BattleScreen class for when the player engages the enemy.
@@ -42,6 +45,9 @@ public class BattleScreen implements Screen {
 	float time = 0;
 	float actionDelay = 2;
 	private Option[] choices;
+	private BattleState battleState = BattleState.PLAYERCHOOSE;
+	private int playerIndex; // TODO: Refactor this
+	private Random rand;
 	
 	//UI elements
 	private Stage stage;
@@ -61,10 +67,12 @@ public class BattleScreen implements Screen {
 	private Game game;
 	private GameScreen gameScreen;
 	private Music bgm;
+	private int enemyHealth_value = 100; // TODO: Refactor this
 	
 	public BattleScreen(Game game, GameScreen gameScreen) {
 		this.game = game;
 		this.gameScreen = gameScreen;
+		rand = new Random();
 		try {
 			bgm = Gdx.audio.newMusic(Gdx.files.internal("aurora.mp3"));
 			bgm.setVolume(0.06f);
@@ -74,6 +82,15 @@ public class BattleScreen implements Screen {
 		}
 		
 		this.createOptions();
+		
+		// TODO: Refactor this later, if time permits
+		for (int i=0; i < Settings.entities.size(); i++) {
+			if(Settings.entities.get(i).getType().equals(EntitiesType.PLAYER)) {
+				((Player) Settings.entities.get(i)).setHealth(100);
+				playerIndex = i;
+			}
+		}
+		
 	}
 	
 	
@@ -82,15 +99,15 @@ public class BattleScreen implements Screen {
 		skin = new Skin(Gdx.files.internal("TDS.json"));
 		stage = new Stage(new FitViewport(Gdx.graphics.getWidth(), Gdx.graphics.getHeight()));
 		root = new Table();
-		topBox = new TextField("Battle Start", skin);
+		topBox = new TextField("Your Move!", skin);
 		optionsBox = new Table();
 		sceneBox = new Table();
 		options = new List<Object>(skin);
 		optionsGreeter = new Label("Select an Option Below: ", skin, "holo-light");
 		playerHealth = new ProgressBar(0f, 100f, 1f, false, skin);
-		playerHealth.setValue(100);
+		playerHealth.setValue(((Player) Settings.entities.get(playerIndex)).getHealth());
 		enemyHealth = new ProgressBar(0f, 100f, 1f, false, skin);
-		enemyHealth.setValue(100);
+		enemyHealth.setValue(enemyHealth_value);
 		
 		
 		options.setItems(this.getArrayChoices());
@@ -115,6 +132,9 @@ public class BattleScreen implements Screen {
 		playerHealth.setPosition(100, 0);
 		playerHealth.setWidth(300);
 		sceneBox.addActor(playerHealth);
+		enemyHealth.setPosition(400, 325);
+		enemyHealth.setWidth(300);
+		sceneBox.addActor(enemyHealth);
 		root.row();
 		Cell<Table> optionsCell = root.add(optionsBox);
 		optionsBox.left().top();
@@ -130,6 +150,8 @@ public class BattleScreen implements Screen {
 
 	@Override
 	public void render(float delta) {
+		int upperBound;
+		int randDamage;
 		ScreenUtils.clear(0,0,0, 0.1f);
 		bgm.play();
 		
@@ -143,14 +165,33 @@ public class BattleScreen implements Screen {
 		}
 		
 		
-		if(Gdx.input.isKeyJustPressed(Keys.SPACE) && turnLock == true) {
-			turnLock = false;
-			sceneBox.getChild(1).addAction(new DamageAction(0.2f, 0.7f, 5f));
-			
+		if(Gdx.input.isKeyJustPressed(Keys.SPACE) && battleState == BattleState.PLAYERCHOOSE) {
+			upperBound = enemyHealth_value;
+			randDamage = rand.nextInt(upperBound);
+			if(sceneBox.getChild(0).getActions().size == 0) {
+				this.enemyHealth_value -= randDamage;
+				enemyHealth.setValue(enemyHealth_value);
+				battleState = BattleState.PLAYEREXECUTE;
+				sceneBox.getChild(1).addAction(new DamageAction(0.2f, 0.7f, 5f));			
+				this.executeTurn(delta);
+			}
+		} else if(battleState == BattleState.PLAYEREXECUTE) {
+			upperBound = ((Player) Settings.entities.get(playerIndex)).getHealth();
+			randDamage = rand.nextInt(upperBound);
+			if(sceneBox.getChild(1).getActions().size == 0) {
+				((Player) Settings.entities.get(playerIndex)).subtractHealth(randDamage);
+				playerHealth.setValue(((Player) Settings.entities.get(playerIndex)).getHealth());
+				sceneBox.getChild(0).addAction(new DamageAction(0.2f, 0.7f, 5f));			
+				battleState = BattleState.ENEMYEXECUTE;
+				this.executeTurn(delta);
+			}
+		} else if(battleState == BattleState.ENEMYEXECUTE) {
+			if(sceneBox.getChild(0).getActions().size == 0) {
+				battleState = BattleState.PLAYERCHOOSE;
+				this.executeTurn(delta);
+			}
 		}
-		
-		this.executeTurn(delta);
-		
+				
 	}
 
 	@Override
@@ -207,20 +248,31 @@ public class BattleScreen implements Screen {
 	 * Executes the current RPG turn where the player does an action and then the enemy does an action
 	 */
 	private void executeTurn(float delta) {
-		if(turnLock == false) {
+		if(battleState == BattleState.PLAYEREXECUTE) {
 			
 			time += delta;
 			
 			if(time > actionDelay) {
 				time -= actionDelay;
-				turnLock = true;
-				topBox.setText("Battle Start");
 				optionsBox.setVisible(true);
 			}
 			else {
-				topBox.setText("Announcement");
+				topBox.setText("Monster's Move!");
 				optionsBox.setVisible(false);
 			}
+		} else if (battleState == BattleState.ENEMYEXECUTE) {
+			time += delta;
+
+			if(time > actionDelay) {
+				time -= actionDelay;
+				optionsBox.setVisible(true);
+			}
+			else {
+				topBox.setText("Your Move!");
+				optionsBox.setVisible(false);
+			}
+		} else if (battleState == BattleState.PLAYERCHOOSE) {
+			optionsBox.setVisible(true);
 		}
 		
 	}

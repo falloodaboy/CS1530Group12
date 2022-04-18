@@ -50,11 +50,17 @@ public class Player extends Entity {
 		panim.dispose();
 	}
 	
-	public float getHealth() {
+
+	public void changePlayerSprite() {
+		
+	}
+	
+	public int getHealth() {
+
 		return health;
 	}
 	
-	public void setHealth(float health) {
+	public void setHealth(int health) {
 		this.health = health;
 	}
 	
@@ -73,6 +79,10 @@ public class Player extends Entity {
 	
 	public float getSpeed() {
 		return speed;
+	}
+	
+	public void subtractHealth(int damage) {
+		this.health = this.getHealth() - damage;
 	}
 	
 	
