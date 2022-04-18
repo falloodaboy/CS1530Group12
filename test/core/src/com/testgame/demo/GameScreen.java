@@ -78,6 +78,9 @@ public class GameScreen implements Screen {
 			bgm.pause();
 			this.pause();
 		}
+		if(Gdx.input.isKeyJustPressed(Keys.E)) {
+			game.setScreen(new EndGameScreen(game, false));
+		}
 	}
 
 
