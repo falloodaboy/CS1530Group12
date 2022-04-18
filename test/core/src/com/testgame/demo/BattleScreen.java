@@ -175,27 +175,17 @@ public class BattleScreen implements Screen {
 				enemyHealth.setValue(enemyHealth_value);
 				battleState = BattleState.PLAYEREXECUTE;
 				sceneBox.getChild(1).addAction(new DamageAction(0.2f, 0.7f, 5f));	
-
-
 				pHealth = ((Player) Settings.entities.get(playerIndex)).getHealth();
 				bossHealth = enemyHealth_value;
-				System.out.println("Player Health: " + pHealth);
-				System.out.println("Enemy Health: " + bossHealth + "\n-----------------------");
 				
-				//checkWinLoss();
 				if(bossHealth <= 1 && pHealth > 1){
 					//player win == true
 					this.game.setScreen(new EndGameScreen((TerraRogueDemo)game, true));
 				}
 				else if(pHealth <= 1 && bossHealth > 1){
-					//enemy win
+					//enemy win == false
 					this.game.setScreen(new EndGameScreen((TerraRogueDemo)game, false));
 				}
-
-
-
-
-
 
 				this.executeTurn(delta);
 			}
@@ -207,25 +197,17 @@ public class BattleScreen implements Screen {
 				playerHealth.setValue(((Player) Settings.entities.get(playerIndex)).getHealth());
 				sceneBox.getChild(0).addAction(new DamageAction(0.2f, 0.7f, 5f));			
 				battleState = BattleState.ENEMYEXECUTE;
-
-
-
 				pHealth = ((Player) Settings.entities.get(playerIndex)).getHealth();
 				bossHealth = enemyHealth_value;
-				System.out.println("Player Health: " + pHealth);
-				System.out.println("Enemy Health: " + bossHealth + "\n-----------------------");
 				
-				//checkWinLoss();
 				if(bossHealth <= 1 && pHealth > 1){
 					//player win == true
 					this.game.setScreen(new EndGameScreen((TerraRogueDemo)game, true));
 				}
 				else if(pHealth <= 1 && bossHealth > 1){
-					//enemy win
+					//enemy win == false
 					this.game.setScreen(new EndGameScreen((TerraRogueDemo)game, false));
 				}
-
-
 				
 				this.executeTurn(delta);
 			}
@@ -236,9 +218,6 @@ public class BattleScreen implements Screen {
 			}
 		}
 				
-	}
-	private static void checkWinLoss(int enemyHealth, int playerHealth, BattleScreen bs){
-		
 	}
 
 	@Override

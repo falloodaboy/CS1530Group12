@@ -110,11 +110,9 @@ public class EndGameScreen implements Screen {
 		backgroundTexture.setWrap(TextureWrap.Repeat, TextureWrap.Repeat);
 		regionBackground = new TextureRegion(backgroundTexture);
 		regionBackground.setRegion(0, 0, backgroundTexture.getWidth(), backgroundTexture.getHeight());
-		//loadGame = new TextButton("Load Game", skin);
 		titler = new Label(drawTitle, skin, "title");
 		titler.setFontScale(1.0f);
 		endGame.pad(0, 50, 0, 50);
-		//loadGame.pad(0, 43, 0, 43);
 		
 		endGame.addListener(new InputListener() {
 			@Override
