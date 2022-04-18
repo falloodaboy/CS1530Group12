@@ -15,7 +15,8 @@ public abstract class Entity {
 	protected EntitiesType type;
 	protected TiledGameMap map;
 	protected float ID = Settings.getNextID();
-	protected float health, speed, strength;
+	protected float speed, strength;
+	protected int health;
 	
 	
 	
@@ -24,7 +25,7 @@ public abstract class Entity {
 		this.type = type;
 		this.map = map;
 		
-		health = type.getStamina();
+//		health = type.getStamina();
 		speed = type.getSpeed();
 		strength = type.getStrength();
 	}
