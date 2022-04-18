@@ -152,6 +152,8 @@ public class BattleScreen implements Screen {
 	public void render(float delta) {
 		int upperBound;
 		int randDamage;
+		int pHealth;
+		int bossHealth;
 		ScreenUtils.clear(0,0,0, 0.1f);
 		bgm.play();
 		
@@ -172,7 +174,29 @@ public class BattleScreen implements Screen {
 				this.enemyHealth_value -= randDamage;
 				enemyHealth.setValue(enemyHealth_value);
 				battleState = BattleState.PLAYEREXECUTE;
-				sceneBox.getChild(1).addAction(new DamageAction(0.2f, 0.7f, 5f));			
+				sceneBox.getChild(1).addAction(new DamageAction(0.2f, 0.7f, 5f));	
+
+
+				pHealth = ((Player) Settings.entities.get(playerIndex)).getHealth();
+				bossHealth = enemyHealth_value;
+				System.out.println("Player Health: " + pHealth);
+				System.out.println("Enemy Health: " + bossHealth + "\n-----------------------");
+				
+				//checkWinLoss();
+				if(bossHealth <= 1 && pHealth > 1){
+					//player win == true
+					this.game.setScreen(new EndGameScreen((TerraRogueDemo)game, true));
+				}
+				else if(pHealth <= 1 && bossHealth > 1){
+					//enemy win
+					this.game.setScreen(new EndGameScreen((TerraRogueDemo)game, false));
+				}
+
+
+
+
+
+
 				this.executeTurn(delta);
 			}
 		} else if(battleState == BattleState.PLAYEREXECUTE) {
@@ -183,6 +207,26 @@ public class BattleScreen implements Screen {
 				playerHealth.setValue(((Player) Settings.entities.get(playerIndex)).getHealth());
 				sceneBox.getChild(0).addAction(new DamageAction(0.2f, 0.7f, 5f));			
 				battleState = BattleState.ENEMYEXECUTE;
+
+
+
+				pHealth = ((Player) Settings.entities.get(playerIndex)).getHealth();
+				bossHealth = enemyHealth_value;
+				System.out.println("Player Health: " + pHealth);
+				System.out.println("Enemy Health: " + bossHealth + "\n-----------------------");
+				
+				//checkWinLoss();
+				if(bossHealth <= 1 && pHealth > 1){
+					//player win == true
+					this.game.setScreen(new EndGameScreen((TerraRogueDemo)game, true));
+				}
+				else if(pHealth <= 1 && bossHealth > 1){
+					//enemy win
+					this.game.setScreen(new EndGameScreen((TerraRogueDemo)game, false));
+				}
+
+
+				
 				this.executeTurn(delta);
 			}
 		} else if(battleState == BattleState.ENEMYEXECUTE) {
@@ -192,6 +236,9 @@ public class BattleScreen implements Screen {
 			}
 		}
 				
+	}
+	private static void checkWinLoss(int enemyHealth, int playerHealth, BattleScreen bs){
+		
 	}
 
 	@Override
