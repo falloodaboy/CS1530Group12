@@ -30,7 +30,7 @@ public class TiledGameMap extends GameMap {
 		background = new Texture("Background.png");
 		
 		player = new Player(-10, 0, this, spriteSheetFileName);
-		Enemy enm = new Enemy(72 , 40, EntitiesType.ENEMYA, this, new Texture(Gdx.files.internal("enemy3.png")), 1);
+		Enemy enm = new Enemy(72 , 40, EntitiesType.ENEMYA, this, new Texture(Gdx.files.internal("enemy4-mirror.png")), 1);
 		Settings.entities.add(player);
 		Settings.entities.add(enm);
 	}
