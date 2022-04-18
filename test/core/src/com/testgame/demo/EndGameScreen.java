@@ -180,7 +180,7 @@ public class EndGameScreen implements Screen {
 		}
 			
 		// Render message
-		if (timer >= letterSpawnTime && stringIndexMessage != message.length()) {
+		if (timer >= letterSpawnTime && stringIndexMessage != message.length()-1) {
 			drawMessage = drawMessage + message.charAt(stringIndexMessage);
 			stringIndexMessage++;
 			timer -= letterSpawnTime;   
