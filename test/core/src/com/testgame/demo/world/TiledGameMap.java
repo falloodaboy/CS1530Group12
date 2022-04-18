@@ -14,6 +14,7 @@ import com.badlogic.gdx.maps.tiled.TiledMapTileLayer.Cell;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.testgame.demo.entities.Enemy;
+import com.testgame.demo.entities.EntitiesType;
 import com.testgame.demo.entities.Entity;
 import com.testgame.demo.entities.Player;
 
@@ -31,9 +32,9 @@ public class TiledGameMap extends GameMap {
 		background = new Texture("Background.png");
 		
 		player = new Player(-10, 0, this, spriteSheetFileName);
-		
+		Enemy enm = new Enemy(72 , 40, EntitiesType.ENEMYA, this, new Texture(Gdx.files.internal("testenm.png")), 1);
 		Settings.entities.add(player);
-
+		Settings.entities.add(enm);
 	}
 	
 	

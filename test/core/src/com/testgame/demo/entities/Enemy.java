@@ -3,6 +3,7 @@ package com.testgame.demo.entities;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.testgame.demo.world.GameMap;
 import com.testgame.demo.world.TiledGameMap;
 
@@ -23,7 +24,8 @@ public class Enemy extends Entity {
 
 	@Override
 	public void render(OrthographicCamera cam, SpriteBatch batch) {
-		batch.draw(image, getX(), getY());
+		Vector3 enmcoords = cam.project(new Vector3(getX(), getY(), 0));
+		batch.draw(image, enmcoords.x, enmcoords.y);
 	}
 
 	@Override
