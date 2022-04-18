@@ -181,10 +181,14 @@ public class BattleScreen implements Screen {
 				if(bossHealth <= 1 && pHealth > 1){
 					//player win == true
 					this.game.setScreen(new EndGameScreen((TerraRogueDemo)game, true));
+					bgm.pause();
+					this.dispose();
 				}
 				else if(pHealth <= 1 && bossHealth > 1){
 					//enemy win == false
 					this.game.setScreen(new EndGameScreen((TerraRogueDemo)game, false));
+					bgm.pause();
+					this.dispose();
 				}
 
 				this.executeTurn(delta);
@@ -201,12 +205,19 @@ public class BattleScreen implements Screen {
 				bossHealth = enemyHealth_value;
 				
 				if(bossHealth <= 1 && pHealth > 1){
-					//player win == true
 					this.game.setScreen(new EndGameScreen((TerraRogueDemo)game, true));
+					this.bgm.pause();
+					this.dispose();
 				}
 				else if(pHealth <= 1 && bossHealth > 1){
 					//enemy win == false
+					
 					this.game.setScreen(new EndGameScreen((TerraRogueDemo)game, false));
+					bgm.pause();
+					this.dispose();
+				}
+				else {
+					System.out.println("printing other state");
 				}
 				
 				this.executeTurn(delta);

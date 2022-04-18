@@ -22,7 +22,7 @@ public class TiledGameMap extends GameMap {
 	private TiledMapTileLayer collisionLayer;
 	private OrthogonalTiledMapRenderer maprenderer;
 	private Texture background;
-	private Player player;
+	public Player player;
 	
 	public TiledGameMap(String spriteSheetFileName) {
 		tileMap = new TmxMapLoader().load("basemap.tmx");
@@ -30,7 +30,7 @@ public class TiledGameMap extends GameMap {
 		background = new Texture("Background.png");
 		
 		player = new Player(-10, 0, this, spriteSheetFileName);
-		Enemy enm = new Enemy(72 , 40, EntitiesType.ENEMYA, this, new Texture(Gdx.files.internal("testenm.png")), 1);
+		Enemy enm = new Enemy(72 , 40, EntitiesType.ENEMYA, this, new Texture(Gdx.files.internal("enemy4-mirror.png")), 1);
 		Settings.entities.add(player);
 		Settings.entities.add(enm);
 	}
@@ -177,26 +177,26 @@ public class TiledGameMap extends GameMap {
 				
 				switch(enm.facing) {
 				case 0: //North
-						if(this.getTile(player.getX()) == this.getTile(enm.getX()) && this.getTile(player.getY()) == this.getTile(enm.getY()) + 1) {
+						if(this.getTile(player.getX() + Settings.PLAYER_WIDTH/2) == this.getTile(enm.getX()) && this.getTile(player.getY() + Settings.PLAYER_HEIGHT/2) == this.getTile(enm.getY()) + 1) {
 							answer = true;
 							Settings.currentEnemy = enm;
 						}
 					break;
 				case 1: //East
-					if(this.getTile(player.getX()) == this.getTile(enm.getX())+1 && this.getTile(player.getY()) == this.getTile(enm.getY())) {
+					if(this.getTile(player.getX() + Settings.PLAYER_WIDTH/2) == this.getTile(enm.getX())+1 && this.getTile(player.getY() + Settings.PLAYER_HEIGHT/2) == this.getTile(enm.getY())) {
 						answer = true;
 						Settings.currentEnemy = enm;
 					}
 					
 					break;
 				case 2: //South
-					if(this.getTile(player.getX()) == this.getTile(enm.getX()) && this.getTile(player.getY()) == this.getTile(enm.getY()) - 1) {
+					if(this.getTile(player.getX() + Settings.PLAYER_WIDTH/2) == this.getTile(enm.getX()) && this.getTile(player.getY() + Settings.PLAYER_HEIGHT/2) == this.getTile(enm.getY()) - 1) {
 						answer = true;
 						Settings.currentEnemy = enm;
 					}
 					break;
 				case 3: //West
-					if(this.getTile(player.getX()) == this.getTile(enm.getX())-1 && this.getTile(player.getY()) == this.getTile(enm.getY())) {
+					if(this.getTile(player.getX() + Settings.PLAYER_WIDTH/2) == this.getTile(enm.getX())-1 && this.getTile(player.getY() + Settings.PLAYER_HEIGHT/2) == this.getTile(enm.getY())) {
 						answer = true;
 						Settings.currentEnemy = enm;
 					}
@@ -225,5 +225,13 @@ public class TiledGameMap extends GameMap {
 		}
 	}
 
+	private boolean checkProximity(float a, float b) {
+		boolean answer = false;
+		
+		if(Math.abs(b-a) <= 1)
+			answer = true;
+		
+		return answer;
+	}
 
 }

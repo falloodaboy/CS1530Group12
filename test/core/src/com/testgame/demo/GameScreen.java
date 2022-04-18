@@ -81,6 +81,14 @@ public class GameScreen implements Screen {
 		if(Gdx.input.isKeyJustPressed(Keys.E)) {
 			game.setScreen(new EndGameScreen(game, false));
 		}
+		
+		
+		if(this.gamemap.checkEnemyEngage(gamemap.player)) {
+			//System.out.println("Looking at enemy");
+			game.setScreen(new BattleScreen(game, this));
+			bgm.pause();
+			this.pause();
+		}
 	}
 
 
