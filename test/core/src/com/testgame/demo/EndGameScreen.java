@@ -22,6 +22,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Value;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.testgame.demo.world.Settings;
 
 
 
@@ -131,9 +132,10 @@ public class EndGameScreen implements Screen {
 			@Override
 			public boolean touchDown(InputEvent event, float x, float y, int pointer, int button) {
 				boolean answer = true;
+				Settings.clear();
 				game.setScreen(new MainMenuScreen(game));
 				dispose();
-				//System.exit(0);
+				
 				
 				return answer;
 			}
@@ -146,7 +148,7 @@ public class EndGameScreen implements Screen {
 		
 		root.add(endGame);
 		root.row().pad(Value.percentWidth(0.02f),Value.percentWidth(0),Value.percentWidth(0.02f), Value.percentWidth(0));
-		//root.add(restartButton);
+		root.add(restartButton);
 		root.row().pad(Value.percentWidth(0.02f),Value.percentWidth(0),Value.percentWidth(0.02f), Value.percentWidth(0));
 
 		root.setBackground(new TextureRegionDrawable(regionBackground));
@@ -180,7 +182,7 @@ public class EndGameScreen implements Screen {
 		}
 			
 		// Render message
-		if (timer >= letterSpawnTime && stringIndexMessage != message.length()-1) {
+		if (timer >= letterSpawnTime && stringIndexMessage != message.length()) {
 			drawMessage = drawMessage + message.charAt(stringIndexMessage);
 			stringIndexMessage++;
 			timer -= letterSpawnTime;   
