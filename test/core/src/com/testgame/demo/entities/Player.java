@@ -20,6 +20,7 @@ public class Player extends Entity {
 	private int lastPressed = -1;
 	private double score = 0;
 	private ArrayList<Item> items;
+	private int mana;
 	
 	public Player(float x, float y, TiledGameMap map, String spriteSheetFileName) {
 		super(x, y, EntitiesType.PLAYER, map);
@@ -27,6 +28,7 @@ public class Player extends Entity {
 		panim = new PlayerAnimation(spritesheet, 64, 64);
 		items = new ArrayList<>();
 		health = 100;
+		mana = 100;
 	}
 
 	@Override
@@ -62,6 +64,15 @@ public class Player extends Entity {
 	
 	public void setHealth(int health) {
 		this.health = health;
+	}
+	
+	public int getMana() {
+
+		return mana;
+	}
+	
+	public void setMana(int mana) {
+		this.health = mana;
 	}
 	
 	
