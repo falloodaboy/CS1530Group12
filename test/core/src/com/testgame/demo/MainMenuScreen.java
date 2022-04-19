@@ -163,10 +163,10 @@ public class MainMenuScreen implements Screen {
 			
 		timer += delta;
 			
-			// Render title
+		// Render title
 		if (timer >= letterSpawnTime && stringIndexTitle != title.length()) {
 			drawTitle = drawTitle + title.charAt(stringIndexTitle);
-			titler.setText(drawTitle + title.charAt(stringIndexTitle));
+			titler.setText(drawTitle);
 			stringIndexTitle++;
 			timer -= letterSpawnTime;        
 			textSound.play();
