@@ -217,7 +217,7 @@ public class BattleScreen implements Screen {
 					this.dispose();
 				}
 				else {
-					System.out.println("printing other state");
+					//System.out.println("printing other state");
 				}
 				
 				this.executeTurn(delta);
